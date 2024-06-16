@@ -1,0 +1,13 @@
+
+.DS_Store
+build
+codecov
+*.xcuserdata
+.vscode/settings.json
+Brewfile.lock.json
+
+/.build
+/Packages
+xcuserdata/
+DerivedData/
+.netrc

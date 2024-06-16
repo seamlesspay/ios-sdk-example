@@ -1,0 +1,22 @@
+version: 2.1
+
+jobs:
+  build:
+    macos:
+      xcode: 15.2.0
+    resource_class: macos.m1.medium.gen1
+    working_directory: ~/ios-sdk-example
+    steps:
+      - checkout
+      - run:
+          name: Build the application
+          no_output_timeout: 5m
+          command: |
+            xcodebuild clean
+            xcodebuild \
+              -project ios-sdk-example.xcodeproj \
+              -scheme Example \
+              -sdk iphonesimulator \
+              -destination 'platform=iOS Simulator,name=iPhone 15' \
+              CODE_SIGN_IDENTITY="" \
+              CODE_SIGNING_REQUIRED=NO

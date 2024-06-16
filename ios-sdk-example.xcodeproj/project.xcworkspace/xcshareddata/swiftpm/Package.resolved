@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "seamlesspay-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/seamlesspay/seamlesspay-ios",
+      "state" : {
+        "revision" : "66f97292f6cdf1b5d93edd7609552b04c4bf3063",
+        "version" : "1.1.0-rc1"
+      }
+    }
+  ],
+  "version" : 2
+}
