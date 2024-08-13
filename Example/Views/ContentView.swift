@@ -36,10 +36,10 @@ struct ContentView: View {
       .sheet(item: $cardFormContentType) { contentType in
         NavigationStack {
           CardFormContent(
-            authorization: .init(
+            config: .init(
+              environment: DemoAuth.environment,
               secretKey: DemoAuth.secretKey,
-              proxyAccountId: DemoAuth.proxyAccountId,
-              environment: DemoAuth.environment
+              proxyAccountId: DemoAuth.proxyAccountId
             ),
             type: contentType
           )
