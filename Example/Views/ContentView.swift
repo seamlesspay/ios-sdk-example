@@ -58,9 +58,3 @@ struct ContentView: View {
 #Preview {
   ContentView()
 }
-
-extension SeamlessPay.Environment: Identifiable {
-  public var id: Int {
-    rawValue
-  }
-}
