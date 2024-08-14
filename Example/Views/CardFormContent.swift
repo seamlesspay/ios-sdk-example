@@ -129,30 +129,11 @@ struct CardFormContent: View {
   }
 }
 
-struct CardFormUI: UIViewRepresentable {
-  private let cardForm: CardForm
-
-  init(cardForm: CardForm) {
-    self.cardForm = cardForm
-  }
-
-  func makeUIView(context: Context) -> CardForm {
-    return cardForm
-  }
-
-  func updateUIView(_ uiView: CardForm, context: Context) {}
-
-  func makeCoordinator() -> CardFormUICoordinator {
-    CardFormUICoordinator(cardFormUI: self)
-  }
-}
-
-class CardFormUICoordinator: NSObject, CardFormDelegate {
-  let cardFormUI: CardFormUI
-  init(cardFormUI: CardFormUI) {
-    self.cardFormUI = cardFormUI
-  }
-
-  // MARK: CardFormDelegate
-  func cardFormDidChange(_ view: CardForm) {}
+#Preview {
+  CardFormContent(
+    config: .init(
+      environment: .sandbox,
+      secretKey: .init()),
+    type: .multi
+  )
 }
