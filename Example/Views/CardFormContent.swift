@@ -27,18 +27,18 @@ struct CardFormContent: View {
   @State var displayResult: DisplayResult = .init(header: "RESULT", payload: "")
   @State var inProgress: Bool = false
 
-  init(authorization: Authorization, type: CardFormContentType) {
+  init(config: SeamlessPay.ClientConfiguration, type: CardFormContentType) {
     let fieldOptions = FieldOptions.default
 
     switch type {
     case .single:
       cardForm = SingleLineCardForm(
-        authorization: authorization,
+        config: config,
         fieldOptions: fieldOptions
       )
     case .multi:
       cardForm = MultiLineCardForm(
-        authorization: authorization,
+        config: config,
         fieldOptions: .init(
           cvv: .init(display: .required),
           postalCode: .init(display: .required)
@@ -71,7 +71,7 @@ struct CardFormContent: View {
             Button {
               startProgress()
               Task {
-                let result = await cardForm.submit(.init(amount: "101"))
+                let result = await cardForm.charge(.init(amount: "101"))
                 processResult(result)
               }
             } label: {
