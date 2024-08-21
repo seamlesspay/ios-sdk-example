@@ -133,7 +133,8 @@ struct CardFormContent: View {
   CardFormContent(
     config: .init(
       environment: .sandbox,
-      secretKey: .init()),
+      secretKey: .init()
+    ),
     type: .multi
   )
 }

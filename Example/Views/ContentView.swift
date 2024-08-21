@@ -11,7 +11,7 @@ import SeamlessPay
 enum DemoAuth {
   static let secretKey: String = "sk_XXXXXXXXXXXXXXXXXXXXXXXXXX"
   static let environment: SeamlessPay.Environment = .staging
-  static let proxyAccountId: String? = "MRT_XXXXXXXXXXXXXXXXXXXXXXXXXX"
+  static let proxyAccountId: String? = .none
 }
 
 struct ContentView: View {
