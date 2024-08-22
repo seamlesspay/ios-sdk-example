@@ -65,10 +65,11 @@ struct CardFormContent: View {
             }
             .buttonStyle(.borderedProminent)
 
+
             Button {
               startProgress()
               Task {
-                let result = await cardForm.charge(.init(amount: "101"))
+                let result = await cardForm.charge(ChargeRequest(amount: 100))
                 processResult(result)
               }
             } label: {
@@ -78,7 +79,7 @@ struct CardFormContent: View {
 
             Button {
               startProgress()
-              cardForm.refund(.init(amount: "10")) {
+              cardForm.refund(RefundRequest(amount: 100)) {
                 processResult($0)
               }
             } label: {

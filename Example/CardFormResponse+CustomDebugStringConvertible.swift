@@ -32,7 +32,7 @@ extension PaymentResponse: CustomDebugStringConvertible {
       - ID: \(id)
       - Payment Token: \(paymentToken)
       - Details:
-          - Amount: \(details.amount ?? "N/A")
+          - Amount: \(details.amount?.description ?? "N/A")
           - Auth Code: \(details.authCode ?? "N/A")
           - Batch ID: \(details.batchId ?? "N/A")
           - Last Four: \(details.lastFour ?? "N/A")
@@ -41,7 +41,7 @@ extension PaymentResponse: CustomDebugStringConvertible {
           - Status Code: \(details.statusCode ?? "N/A")
           - Status Description: \(details.statusDescription ?? "N/A")
           - Transaction Date: \(details.transactionDate ?? "N/A")
-          - Surcharge Fee Amount Description: \(details.surchargeFeeAmount ?? "N/A")
+          - Surcharge Fee Amount Description: \(details.surchargeFeeAmount?.description ?? "N/A")
           - Postal Code AVS Result: \(details.avsPostalCodeResult?.rawValue ?? "N/A")
           - Street Address AVS Result: \(details.avsStreetAddressResult?.rawValue ?? "N/A")
           - CVV AVS Result: \(details.cvvResult?.rawValue ?? "N/A")
