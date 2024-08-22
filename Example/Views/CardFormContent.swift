@@ -39,10 +39,7 @@ struct CardFormContent: View {
     case .multi:
       cardForm = MultiLineCardForm(
         config: config,
-        fieldOptions: .init(
-          cvv: .init(display: .required),
-          postalCode: .init(display: .required)
-        )
+        fieldOptions: fieldOptions
       )
     }
   }
