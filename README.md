@@ -31,11 +31,8 @@ init(authorization: Authorization, type: CardFormContentType) {
       )
     case .multi:
       cardForm = MultiLineCardForm(
-        authorization: authorization,
-        fieldOptions: .init(
-          cvv: .init(display: .required),
-          postalCode: .init(display: .required)
-        )
+        config: config,
+        fieldOptions: fieldOptions
       )
     }
   }
