@@ -20,7 +20,6 @@
 		63635CD62C6CF07D005E5F03 /* CardFormUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63635CD52C6CF07D005E5F03 /* CardFormUI.swift */; };
 		6367EA102C4E858C00CAB2BF /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = 6367EA0F2C4E858C00CAB2BF /* SeamlessPay */; };
 		63991E8B2C4EBF28009C71D8 /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = 63991E8A2C4EBF28009C71D8 /* SeamlessPay */; };
-		63AA7C082C771FE300EB9251 /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = 63AA7C072C771FE300EB9251 /* SeamlessPay */; };
 		63D145A22BF5F0540010451D /* CardFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D145A12BF5F0540010451D /* CardFormContent.swift */; };
 		63D145A42BF60B360010451D /* CardFormResponse+CustomDebugStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D145A32BF60B360010451D /* CardFormResponse+CustomDebugStringConvertible.swift */; };
 		63DE0DCD2C7512E700DA1E86 /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = 63DE0DCC2C7512E700DA1E86 /* SeamlessPay */; };
@@ -332,7 +331,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Example/Preview Content\"";
 				DEVELOPMENT_TEAM = VVHY4NW744;
 				ENABLE_PREVIEWS = YES;
@@ -347,7 +346,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.seamlesspay.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -362,7 +361,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Example/Preview Content\"";
 				DEVELOPMENT_TEAM = VVHY4NW744;
 				ENABLE_PREVIEWS = YES;
@@ -377,7 +376,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.seamlesspay.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -451,11 +450,6 @@
 		};
 		63991E8A2C4EBF28009C71D8 /* SeamlessPay */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = SeamlessPay;
-		};
-		63AA7C072C771FE300EB9251 /* SeamlessPay */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 63AA7C062C771FE300EB9251 /* XCRemoteSwiftPackageReference "seamlesspay-ios" */;
 			productName = SeamlessPay;
 		};
 		63DE0DCC2C7512E700DA1E86 /* SeamlessPay */ = {
