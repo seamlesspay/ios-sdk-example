@@ -48,7 +48,7 @@ extension PaymentResponse: CustomDebugStringConvertible {
           - Account Type: \(details.accountType?.rawValue ?? "N/A")
           - Currency: \(details.currency?.rawValue ?? "N/A")
           - Expiration Date: \(details.expDate ?? "N/A")
-          - Tip: \(details.tip ?? "N/A")
+          - Tip: \(details.tip?.description ?? "N/A")
     """
   }
 }
