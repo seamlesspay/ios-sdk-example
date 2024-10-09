@@ -8,47 +8,27 @@
 import SwiftUI
 import SeamlessPay
 
-enum CardFormContentType: String, Identifiable {
-  var id: String {
-    rawValue
-  }
-
-  case single
-  case multi
-}
-
 struct CardFormContent: View {
-  struct DisplayResult {
-    let header: String
-    let payload: String
-  }
-
-  private let cardForm: CardForm
   @State var displayResult: DisplayResult = .init(header: "RESULT", payload: "")
   @State var inProgress: Bool = false
 
-  init(config: SeamlessPay.ClientConfiguration, type: CardFormContentType) {
-    let fieldOptions = FieldOptions.default
-
-    switch type {
-    case .single:
-      cardForm = SingleLineCardForm(
-        config: config,
-        fieldOptions: fieldOptions
-      )
-    case .multi:
-      cardForm = MultiLineCardForm(
-        config: config,
-        fieldOptions: fieldOptions
-      )
-    }
-  }
+  let header: String
+  let cardFromRepresentable: AnyView
+  let tokenize: (((Result<TokenizeResponse, SeamlessPayError>) -> Void)?) -> Void
+  let charge: (
+    _ request: ChargeRequest,
+    ((Result<PaymentResponse, SeamlessPayError>) -> Void)?
+  ) -> Void
+  let refund: (
+    _ request: RefundRequest,
+    ((Result<PaymentResponse, SeamlessPayError>) -> Void)?
+  ) -> Void
 
   var body: some View {
     List {
       Group {
-        Section(header: Text("Card Form")) {
-          CardFormUI(cardForm: cardForm)
+        Section(header: Text(header)) {
+          cardFromRepresentable
             .frame(height: 300)
             .frame(maxWidth: .infinity)
         }
@@ -57,7 +37,7 @@ struct CardFormContent: View {
           HStack {
             Button {
               startProgress()
-              cardForm.tokenize {
+              tokenize {
                 processResult($0)
               }
             } label: {
@@ -65,12 +45,12 @@ struct CardFormContent: View {
             }
             .buttonStyle(.borderedProminent)
 
-
             Button {
               startProgress()
               Task {
-                let result = await cardForm.charge(ChargeRequest(amount: 100))
-                processResult(result)
+                charge(ChargeRequest(amount: 100)) { result in
+                  processResult(result)
+                }
               }
             } label: {
               Text("Pay")
@@ -79,7 +59,7 @@ struct CardFormContent: View {
 
             Button {
               startProgress()
-              cardForm.refund(RefundRequest(amount: 100)) {
+              refund(RefundRequest(amount: 100)) {
                 processResult($0)
               }
             } label: {
@@ -125,14 +105,4 @@ struct CardFormContent: View {
     inProgress = true
     displayResult = .init(header: "RESULT", payload: "")
   }
-}
-
-#Preview {
-  CardFormContent(
-    config: .init(
-      environment: .sandbox,
-      secretKey: .init()
-    ),
-    type: .multi
-  )
 }

@@ -9,9 +9,9 @@ import SwiftUI
 import SeamlessPay
 
 enum DemoAuth {
-  static let secretKey: String = "sk_XXXXXXXXXXXXXXXXXXXXXXXXXX"
+  static let secretKey: String = "sk_01HV75FH87CCT098427ZVEKQHZ"
   static let environment: SeamlessPay.Environment = .staging
-  static let proxyAccountId: String? = "MRT_XXXXXXXXXXXXXXXXXXXXXXXXXX"
+  static let proxyAccountId: String? = .none
 }
 
 struct ContentView: View {
@@ -21,28 +21,40 @@ struct ContentView: View {
     NavigationView {
       List {
         Section {
-          Text("Singleline Card Form")
-            .onTapGesture {
-              self.cardFormContentType = .single
-            }
-          Text("Multiline Card Form")
-            .onTapGesture {
-              self.cardFormContentType = .multi
-            }
+          Button("SingleLine Card Form") {
+            self.cardFormContentType = .single
+          }
+          Button("Multiline Card Form") {
+            self.cardFormContentType = .multi
+          }
         } header: {
           Text("UI Components")
         }
       }
       .sheet(item: $cardFormContentType) { contentType in
         NavigationStack {
-          CardFormContent(
-            config: .init(
-              environment: DemoAuth.environment,
-              secretKey: DemoAuth.secretKey,
-              proxyAccountId: DemoAuth.proxyAccountId
-            ),
-            type: contentType
-          )
+          Group {
+            switch contentType {
+            case .single:
+              SingleLineCardFormContent(
+                config: .init(
+                  environment: DemoAuth.environment,
+                  secretKey: DemoAuth.secretKey,
+                  proxyAccountId: DemoAuth.proxyAccountId
+                ),
+                fieldOptions: .default
+              )
+            case .multi:
+              MultiLineCardFormContent(
+                config: .init(
+                  environment: DemoAuth.environment,
+                  secretKey: DemoAuth.secretKey,
+                  proxyAccountId: DemoAuth.proxyAccountId
+                ),
+                fieldOptions: .default
+              )
+            }
+          }
           .navigationBarItems(
             trailing: Button("Done") {
               self.cardFormContentType = .none
