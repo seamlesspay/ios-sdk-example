@@ -35,11 +35,11 @@ class MultiLineCardFormUICoordinator: NSObject, CardFormDelegate {
   }
 
   // MARK: CardFormDelegate
-  func cardFormDidChange(_ form: CardFormProtocol) {
-    print("is MultiLineCardForm valid = ", form.isValid)
+  func cardFormDidChange(_ form: CardForm) {
+      print("is MultiLineCardForm valid = ", form.isValid)
   }
 
-  func cardFormWillEndEditing(forReturn form: CardFormProtocol) {
+  func cardFormWillEndEditing(forReturn form: CardForm) {
     print("is MultiLineCardForm valid = ", form.isValid)
   }
 }
@@ -71,7 +71,7 @@ class SingleLineCardFormUICoordinator: NSObject, CardFormDelegate {
   }
 
   // MARK: CardFormDelegate
-  func cardFormDidChange(_ form: CardFormProtocol) {
+  func cardFormDidChange(_ form: CardForm) {
     print("is SingleLineCardForm valid = ", form.isValid)
   }
 }
