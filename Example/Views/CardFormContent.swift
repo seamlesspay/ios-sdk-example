@@ -9,7 +9,7 @@ import SwiftUI
 import SeamlessPay
 
 struct CardFormContent: View {
-  @State var displayResult: DisplayResult = .init(header: "RESULT", payload: "")
+  @State var displayResult: DisplayResult = .init(header: "Result:", payload: "")
   @State var inProgress: Bool = false
 
   let header: String
@@ -25,67 +25,63 @@ struct CardFormContent: View {
   ) -> Void
 
   var body: some View {
-    List {
-      Group {
-        Section(header: Text(header)) {
-          cardFromRepresentable
-            .frame(height: 300)
-            .frame(maxWidth: .infinity)
-        }
-
-        Section(header: Text("Capabilities")) {
-          HStack {
-            Button {
-              startProgress()
-              tokenize {
-                processResult($0)
-              }
-            } label: {
-              Text("Tokenize")
-            }
-            .buttonStyle(.borderedProminent)
-
-            Button {
-              startProgress()
-              Task {
-                charge(ChargeRequest(amount: 100)) { result in
-                  processResult(result)
-                }
-              }
-            } label: {
-              Text("Pay")
-            }
-            .buttonStyle(.borderedProminent)
-
-            Button {
-              startProgress()
-              refund(RefundRequest(amount: 100)) {
-                processResult($0)
-              }
-            } label: {
-              Text("Refund")
-            }
-            .buttonStyle(.borderedProminent)
-          }
-          .frame(maxWidth: .infinity, alignment: .center)
-        }
-
-        Section(
-          header: Text(displayResult.header)
-        ) {
-          VStack {
-            if inProgress {
-              ProgressView()
-                .frame(maxWidth: .infinity, alignment: .center)
-            }
-            Text(displayResult.payload)
-              .lineLimit(.none)
-              .listRowSeparator(.hidden)
-          }
-        }
+    VStack(spacing: 44) {
+      VStack {
+        Text(header)
+          .fontWeight(.bold)
+        cardFromRepresentable
+          .padding(.horizontal)
       }
-      .listRowSeparator(.hidden)
-      .listRowBackground(Color.clear)
+      VStack {
+        Text("Capabilities")
+          .fontWeight(.bold)
+        HStack {
+          Button {
+            startProgress()
+            tokenize {
+              processResult($0)
+            }
+          } label: {
+            Text("Tokenize")
+          }
+          .buttonStyle(.borderedProminent)
+
+          Button {
+            startProgress()
+            Task {
+              charge(ChargeRequest(amount: 100)) { result in
+                processResult(result)
+              }
+            }
+          } label: {
+            Text("Pay")
+          }
+          .buttonStyle(.borderedProminent)
+
+          Button {
+            startProgress()
+            refund(RefundRequest(amount: 100)) {
+              processResult($0)
+            }
+          } label: {
+            Text("Refund")
+          }
+          .buttonStyle(.borderedProminent)
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
+      }
+
+      VStack {
+        Text(displayResult.header)
+          .fontWeight(.bold)
+        if inProgress {
+          ProgressView()
+            .frame(maxWidth: .infinity, alignment: .center)
+        }
+        Text(displayResult.payload)
+          .lineLimit(.none)
+          .multilineTextAlignment(.leading)
+      }
     }
   }
 
@@ -95,14 +91,14 @@ struct CardFormContent: View {
     inProgress = false
     switch result {
     case let .success(payload):
-      displayResult = .init(header: "SUCCESS", payload: payload.debugDescription)
+      displayResult = .init(header: "Success:", payload: payload.debugDescription)
     case let .failure(error):
-      displayResult = .init(header: "FAILURE", payload: error.localizedDescription)
+      displayResult = .init(header: "Failure:", payload: error.localizedDescription)
     }
   }
 
   private func startProgress() {
     inProgress = true
-    displayResult = .init(header: "RESULT", payload: "")
+    displayResult = .init(header: "", payload: "")
   }
 }

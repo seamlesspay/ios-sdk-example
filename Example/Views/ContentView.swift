@@ -15,7 +15,7 @@ enum DemoAuth {
 }
 
 struct ContentView: View {
-  @State private var cardFormContentType: CardFormContentType?
+  @State private var cardFormContentType: CardFormContentType? = .multi
 
   var body: some View {
     NavigationView {
