@@ -9,13 +9,13 @@ import SwiftUI
 import SeamlessPay
 
 enum DemoAuth {
-  static let secretKey: String = "sk_01HV75FH87CCT098427ZVEKQHZ"
+  static let secretKey: String = "sk_XXXXXXXXXXXXXXXXXXXXXXXXXX"
   static let environment: SeamlessPay.Environment = .staging
-  static let proxyAccountId: String? = .none
+  static let proxyAccountId: String? = "MRT_XXXXXXXXXXXXXXXXXXXXXXXXXX"
 }
 
 struct ContentView: View {
-  @State private var cardFormContentType: CardFormContentType? = .multi
+  @State private var cardFormContentType: CardFormContentType?
 
   var body: some View {
     NavigationView {

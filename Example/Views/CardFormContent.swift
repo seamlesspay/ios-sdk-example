@@ -9,7 +9,7 @@ import SwiftUI
 import SeamlessPay
 
 struct CardFormContent: View {
-  @State var displayResult: DisplayResult = .init(header: "Result:", payload: "")
+  @State var displayResult: DisplayResult = .init(header: "", payload: "")
   @State var inProgress: Bool = false
 
   let header: String
@@ -32,6 +32,7 @@ struct CardFormContent: View {
         cardFromRepresentable
           .padding(.horizontal)
       }
+
       VStack {
         Text("Capabilities")
           .fontWeight(.bold)
@@ -68,21 +69,23 @@ struct CardFormContent: View {
           }
           .buttonStyle(.borderedProminent)
         }
-        .frame(maxWidth: .infinity, alignment: .center)
-      }
 
-      VStack {
         Text(displayResult.header)
+          .lineLimit(1)
           .fontWeight(.bold)
         if inProgress {
           ProgressView()
-            .frame(maxWidth: .infinity, alignment: .center)
+            .frame(
+              maxWidth: .infinity,
+              alignment: .center
+            )
+        } else {
+          Text(displayResult.payload)
+            .multilineTextAlignment(.leading)
         }
-        Text(displayResult.payload)
-          .lineLimit(.none)
-          .multilineTextAlignment(.leading)
       }
     }
+    .frame(maxWidth: .infinity, alignment: .center)
   }
 
   private func processResult(
@@ -91,9 +94,9 @@ struct CardFormContent: View {
     inProgress = false
     switch result {
     case let .success(payload):
-      displayResult = .init(header: "Success:", payload: payload.debugDescription)
+      displayResult = .init(header: "Success", payload: payload.debugDescription)
     case let .failure(error):
-      displayResult = .init(header: "Failure:", payload: error.localizedDescription)
+      displayResult = .init(header: "Failure", payload: error.localizedDescription)
     default:
       displayResult = .init(header: "", payload: "")
     }
@@ -103,4 +106,19 @@ struct CardFormContent: View {
     inProgress = true
     displayResult = .init(header: "", payload: "")
   }
+}
+
+#Preview {
+  CardFormContent(
+    header: "Multiline Card Form",
+    cardFromRepresentable: AnyView(MultiLineCardFormUI(cardForm: MultiLineCardForm())),
+    tokenize: { completion in
+
+    },
+    charge: { _, completion in
+
+    },
+    refund: { _, completion in
+    }
+  )
 }
