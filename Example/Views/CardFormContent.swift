@@ -14,14 +14,14 @@ struct CardFormContent: View {
 
   let header: String
   let cardFromRepresentable: AnyView
-  let tokenize: (((Result<TokenizeResponse, SeamlessPayError>) -> Void)?) -> Void
+  let tokenize: (((Result<TokenizeResponse, SeamlessPayError>?) -> Void)?) -> Void
   let charge: (
     _ request: ChargeRequest,
-    ((Result<PaymentResponse, SeamlessPayError>) -> Void)?
+    ((Result<PaymentResponse, SeamlessPayError>?) -> Void)?
   ) -> Void
   let refund: (
     _ request: RefundRequest,
-    ((Result<PaymentResponse, SeamlessPayError>) -> Void)?
+    ((Result<PaymentResponse, SeamlessPayError>?) -> Void)?
   ) -> Void
 
   var body: some View {
@@ -86,7 +86,7 @@ struct CardFormContent: View {
   }
 
   private func processResult(
-    _ result: Result<some CustomDebugStringConvertible, SeamlessPayError>
+    _ result: Result<some CustomDebugStringConvertible, SeamlessPayError>?
   ) {
     inProgress = false
     switch result {
@@ -94,6 +94,8 @@ struct CardFormContent: View {
       displayResult = .init(header: "Success:", payload: payload.debugDescription)
     case let .failure(error):
       displayResult = .init(header: "Failure:", payload: error.localizedDescription)
+    default:
+      displayResult = .init(header: "", payload: "")
     }
   }
 
