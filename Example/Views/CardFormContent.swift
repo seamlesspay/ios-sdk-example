@@ -8,131 +8,117 @@
 import SwiftUI
 import SeamlessPay
 
-enum CardFormContentType: String, Identifiable {
-  var id: String {
-    rawValue
-  }
-
-  case single
-  case multi
-}
-
 struct CardFormContent: View {
-  struct DisplayResult {
-    let header: String
-    let payload: String
-  }
-
-  private let cardForm: CardForm
-  @State var displayResult: DisplayResult = .init(header: "RESULT", payload: "")
+  @State var displayResult: DisplayResult = .init(header: "", payload: "")
   @State var inProgress: Bool = false
 
-  init(config: SeamlessPay.ClientConfiguration, type: CardFormContentType) {
-    let fieldOptions = FieldOptions.default
-
-    switch type {
-    case .single:
-      cardForm = SingleLineCardForm(
-        config: config,
-        fieldOptions: fieldOptions
-      )
-    case .multi:
-      cardForm = MultiLineCardForm(
-        config: config,
-        fieldOptions: fieldOptions
-      )
-    }
-  }
+  let header: String
+  let cardFromRepresentable: AnyView
+  let tokenize: (((Result<TokenizeResponse, SeamlessPayError>?) -> Void)?) -> Void
+  let charge: (
+    _ request: ChargeRequest,
+    ((Result<PaymentResponse, SeamlessPayError>?) -> Void)?
+  ) -> Void
+  let refund: (
+    _ request: RefundRequest,
+    ((Result<PaymentResponse, SeamlessPayError>?) -> Void)?
+  ) -> Void
 
   var body: some View {
-    List {
-      Group {
-        Section(header: Text("Card Form")) {
-          CardFormUI(cardForm: cardForm)
-            .frame(height: 300)
-            .frame(maxWidth: .infinity)
-        }
+    VStack(spacing: 44) {
+      VStack {
+        Text(header)
+          .fontWeight(.bold)
+        cardFromRepresentable
+          .padding(.horizontal)
+      }
 
-        Section(header: Text("Capabilities")) {
-          HStack {
-            Button {
-              startProgress()
-              cardForm.tokenize {
-                processResult($0)
-              }
-            } label: {
-              Text("Tokenize")
+      VStack {
+        Text("Capabilities")
+          .fontWeight(.bold)
+        HStack {
+          Button {
+            startProgress()
+            tokenize {
+              processResult($0)
             }
-            .buttonStyle(.borderedProminent)
+          } label: {
+            Text("Tokenize")
+          }
+          .buttonStyle(.borderedProminent)
 
-
-            Button {
-              startProgress()
-              Task {
-                let result = await cardForm.charge(ChargeRequest(amount: 100))
+          Button {
+            startProgress()
+            Task {
+              charge(ChargeRequest(amount: 100)) { result in
                 processResult(result)
               }
-            } label: {
-              Text("Pay")
             }
-            .buttonStyle(.borderedProminent)
-
-            Button {
-              startProgress()
-              cardForm.refund(RefundRequest(amount: 100)) {
-                processResult($0)
-              }
-            } label: {
-              Text("Refund")
-            }
-            .buttonStyle(.borderedProminent)
+          } label: {
+            Text("Pay")
           }
-          .frame(maxWidth: .infinity, alignment: .center)
+          .buttonStyle(.borderedProminent)
+
+          Button {
+            startProgress()
+            refund(RefundRequest(amount: 100)) {
+              processResult($0)
+            }
+          } label: {
+            Text("Refund")
+          }
+          .buttonStyle(.borderedProminent)
         }
 
-        Section(
-          header: Text(displayResult.header)
-        ) {
-          VStack {
-            if inProgress {
-              ProgressView()
-                .frame(maxWidth: .infinity, alignment: .center)
-            }
-            Text(displayResult.payload)
-              .lineLimit(.none)
-              .listRowSeparator(.hidden)
-          }
+        Text(displayResult.header)
+          .lineLimit(1)
+          .fontWeight(.bold)
+        if inProgress {
+          ProgressView()
+            .frame(
+              maxWidth: .infinity,
+              alignment: .center
+            )
+        } else {
+          Text(displayResult.payload)
+            .multilineTextAlignment(.leading)
         }
       }
-      .listRowSeparator(.hidden)
-      .listRowBackground(Color.clear)
     }
+    .frame(maxWidth: .infinity, alignment: .center)
   }
 
   private func processResult(
-    _ result: Result<some CustomDebugStringConvertible, SeamlessPayError>
+    _ result: Result<some CustomDebugStringConvertible, SeamlessPayError>?
   ) {
     inProgress = false
     switch result {
     case let .success(payload):
-      displayResult = .init(header: "SUCCESS", payload: payload.debugDescription)
+      displayResult = .init(header: "Success", payload: payload.debugDescription)
     case let .failure(error):
-      displayResult = .init(header: "FAILURE", payload: error.localizedDescription)
+      displayResult = .init(header: "Failure", payload: error.localizedDescription)
+    default:
+      displayResult = .init(header: "", payload: "")
     }
   }
 
   private func startProgress() {
     inProgress = true
-    displayResult = .init(header: "RESULT", payload: "")
+    displayResult = .init(header: "", payload: "")
   }
 }
 
 #Preview {
   CardFormContent(
-    config: .init(
-      environment: .sandbox,
-      secretKey: .init()
-    ),
-    type: .multi
+    header: "Multiline Card Form",
+    cardFromRepresentable: AnyView(MultiLineCardFormUI(cardForm: MultiLineCardForm())),
+    tokenize: { completion in
+
+    },
+    charge: { _, completion in
+
+    },
+    refund: { _, completion in
+    }
   )
 }
