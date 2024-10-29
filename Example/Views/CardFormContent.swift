@@ -111,7 +111,18 @@ struct CardFormContent: View {
 #Preview {
   CardFormContent(
     header: "Multiline Card Form",
-    cardFromRepresentable: AnyView(MultiLineCardFormUI(cardForm: MultiLineCardForm())),
+    cardFromRepresentable: AnyView(
+      MultiLineCardFormUI(
+        cardForm: MultiLineCardForm(
+          config: .init(
+            environment: .sandbox,
+            secretKey: "sk_x"
+          ),
+          fieldOptions: .init(cvv: .init(display: .required), postalCode: .init(display: .required)),
+          styleOptions: .default
+        )
+      )
+    ),
     tokenize: { completion in
 
     },
