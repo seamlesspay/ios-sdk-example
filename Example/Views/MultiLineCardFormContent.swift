@@ -13,11 +13,13 @@ struct MultiLineCardFormContent: View {
 
   init(
     config: SeamlessPay.ClientConfiguration,
-    fieldOptions: FieldOptions
+    fieldOptions: SeamlessPay.FieldOptions,
+    styleOptions: SeamlessPay.StyleOptions
   ) {
     cardForm = MultiLineCardForm(
       config: config,
-      fieldOptions: .init(cvv: .init(display: .required), postalCode: .init(display: .required))
+      fieldOptions: fieldOptions,
+      styleOptions: styleOptions
     )
   }
 
@@ -38,6 +40,7 @@ struct MultiLineCardFormContent: View {
       environment: .sandbox,
       secretKey: .init()
     ),
-    fieldOptions: .default
+    fieldOptions: .default,
+    styleOptions: .default
   )
 }
