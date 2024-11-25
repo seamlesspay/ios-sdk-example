@@ -51,7 +51,51 @@ struct ContentView: View {
                   secretKey: DemoAuth.secretKey,
                   proxyAccountId: DemoAuth.proxyAccountId
                 ),
-                fieldOptions: .default
+                fieldOptions: FieldOptions(
+                  cvv: FieldConfiguration(display: .required),
+                  postalCode: FieldConfiguration(display: .required)
+                ),
+                styleOptions: StyleOptions(
+                  colors: Colors(
+                    light: ColorPalette(
+                      theme: ThemeColors(
+                        neutral: UIColor(red: 42 / 255, green: 42 / 255, blue: 42 / 255, alpha: 1),
+                        primary: UIColor(
+                          red: 59 / 255,
+                          green: 130 / 255,
+                          blue: 246 / 255,
+                          alpha: 1
+                        ),
+                        danger: UIColor(red: 186 / 255, green: 32 / 255, blue: 60 / 255, alpha: 1)
+                      )
+                    ),
+                    dark: ColorPalette(
+                      theme: ThemeColors(
+                        neutral: UIColor(
+                          red: 249 / 255,
+                          green: 249 / 255,
+                          blue: 249 / 255,
+                          alpha: 1
+                        ),
+                        primary: UIColor(
+                          red: 59 / 255,
+                          green: 130 / 255,
+                          blue: 246 / 255,
+                          alpha: 1
+                        ),
+                        danger: UIColor(red: 207 / 255, green: 102 / 255, blue: 121 / 255, alpha: 1)
+                      )
+                    )
+                  ),
+                  shapes: Shapes(
+                    cornerRadius: 5.0
+                  ),
+                  typography: Typography(
+                    font: UIFont.systemFont(ofSize: 18),
+                    scale: 1.0
+                  ),
+                  iconSet: .none
+                )
               )
             }
           }
