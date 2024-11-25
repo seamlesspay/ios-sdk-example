@@ -20,19 +20,18 @@ enum DemoAuth {
 You can also modify the field configuration yourself and initialize UI components with this data.
 
 ```swift
-init(authorization: Authorization, type: CardFormContentType) {
-    let fieldOptions = FieldOptions.default
-
+init(config: SeamlessPay.ClientConfiguration, type: CardFormContentType) {
     switch type {
     case .single:
       cardForm = SingleLineCardForm(
-        authorization: authorization,
-        fieldOptions: fieldOptions
+        config: config,
+        fieldOptions: FieldOptions.default
       )
     case .multi:
       cardForm = MultiLineCardForm(
         config: config,
-        fieldOptions: fieldOptions
+        fieldOptions: FieldOptions.default,
+        styleOptions: StyleOptions.default
       )
     }
   }
