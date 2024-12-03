@@ -17,6 +17,54 @@ enum DemoAuth {
 struct ContentView: View {
   @State private var cardFormContentType: CardFormContentType?
 
+  private let unifiedColorPalette: ColorPalette = {
+    let cornerRadius: CGFloat = 5.0
+
+    let primaryColor = UIColor(
+      red: 59 / 255,
+      green: 130 / 255,
+      blue: 246 / 255,
+      alpha: 1
+    )
+
+    let dangerColor = UIColor(
+      red: 207 / 255,
+      green: 102 / 255,
+      blue: 121 / 255,
+      alpha: 1
+    )
+
+    let neutralColor = UIColor(
+      red: 42 / 255,
+      green: 42 / 255,
+      blue: 42 / 255,
+      alpha: 1
+    )
+
+    return .init(
+      theme: ThemeColors(
+        neutral: neutralColor,
+        primary: primaryColor,
+        danger: dangerColor
+      ),
+      fieldColors: .init(
+        background: .init(
+          inactive: .systemGray6,
+          focusValid: .systemGray6,
+          focusInvalid: .systemGray6,
+          invalid: .systemGray6
+        ),
+        hint: .none,
+        icon: .none,
+        label: .none,
+        outline: .none,
+        text: .none
+      ),
+      errorMessage: dangerColor,
+      header: neutralColor
+    )
+  }()
+
   var body: some View {
     NavigationView {
       List {
@@ -57,35 +105,8 @@ struct ContentView: View {
                 ),
                 styleOptions: StyleOptions(
                   colors: Colors(
-                    light: ColorPalette(
-                      theme: ThemeColors(
-                        neutral: UIColor(red: 42 / 255, green: 42 / 255, blue: 42 / 255, alpha: 1),
-                        primary: UIColor(
-                          red: 59 / 255,
-                          green: 130 / 255,
-                          blue: 246 / 255,
-                          alpha: 1
-                        ),
-                        danger: UIColor(red: 186 / 255, green: 32 / 255, blue: 60 / 255, alpha: 1)
-                      )
-                    ),
-                    dark: ColorPalette(
-                      theme: ThemeColors(
-                        neutral: UIColor(
-                          red: 249 / 255,
-                          green: 249 / 255,
-                          blue: 249 / 255,
-                          alpha: 1
-                        ),
-                        primary: UIColor(
-                          red: 59 / 255,
-                          green: 130 / 255,
-                          blue: 246 / 255,
-                          alpha: 1
-                        ),
-                        danger: UIColor(red: 207 / 255, green: 102 / 255, blue: 121 / 255, alpha: 1)
-                      )
-                    )
+                    light: unifiedColorPalette,
+                    dark: unifiedColorPalette
                   ),
                   shapes: Shapes(
                     cornerRadius: 5.0

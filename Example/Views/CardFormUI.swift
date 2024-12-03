@@ -36,7 +36,7 @@ class MultiLineCardFormUICoordinator: NSObject, CardFormDelegate {
 
   // MARK: CardFormDelegate
   func cardFormDidChange(_ form: CardForm) {
-      print("is MultiLineCardForm valid = ", form.isValid)
+    print("is MultiLineCardForm valid = ", form.isValid)
   }
 
   func cardFormWillEndEditing(forReturn form: CardForm) {
