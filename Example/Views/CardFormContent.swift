@@ -9,8 +9,7 @@ import SwiftUI
 import SeamlessPay
 
 struct CardFormContent: View {
-  @State var displayResult: DisplayResult = .init(header: "", payload: "")
-  @State var inProgress: Bool = false
+  @State var status: RequestStatus = .idle
 
   let header: String
   let cardFromRepresentable: AnyView
@@ -33,78 +32,71 @@ struct CardFormContent: View {
           .padding(.horizontal)
       }
 
-      VStack {
-        Text("Capabilities")
-          .fontWeight(.bold)
-        HStack {
-          Button {
-            startProgress()
-            tokenize {
-              processResult($0)
-            }
-          } label: {
-            Text("Tokenize")
-          }
-          .buttonStyle(.borderedProminent)
-
-          Button {
-            startProgress()
-            Task {
-              charge(ChargeRequest(amount: 100)) { result in
-                processResult(result)
-              }
-            }
-          } label: {
-            Text("Pay")
-          }
-          .buttonStyle(.borderedProminent)
-
-          Button {
-            startProgress()
-            refund(RefundRequest(amount: 100)) {
-              processResult($0)
-            }
-          } label: {
-            Text("Refund")
-          }
-          .buttonStyle(.borderedProminent)
-        }
-
-        Text(displayResult.header)
+      VStack(spacing: 16) {
+        Text(status.header)
           .lineLimit(1)
           .fontWeight(.bold)
-        if inProgress {
+          .foregroundColor(status.color)
+        if status.inProgress {
           ProgressView()
             .frame(
               maxWidth: .infinity,
               alignment: .center
             )
+            .foregroundColor(status.color)
         } else {
-          Text(displayResult.payload)
+          Text(status.payload)
             .multilineTextAlignment(.leading)
+        }
+
+        HStack {
+          actionButton(title: "Tokenize") {
+            tokenize {
+              processResult($0)
+            }
+          }
+          actionButton(title: "Pay") {
+            charge(ChargeRequest(amount: 100)) {
+              processResult($0)
+            }
+          }
+          actionButton(title: "Refund") {
+            refund(RefundRequest(amount: 100)) {
+              processResult($0)
+            }
+          }
         }
       }
     }
     .frame(maxWidth: .infinity, alignment: .center)
   }
 
+  @ViewBuilder
+  private func actionButton(title: String, action: @escaping () -> Void) -> some View {
+    Button {
+      withAnimation {
+        status = .processing
+        action()
+      }
+    } label: {
+      Text(title)
+    }
+    .buttonStyle(.borderedProminent)
+  }
+
   private func processResult(
     _ result: Result<some CustomDebugStringConvertible, SeamlessPayError>?
   ) {
-    inProgress = false
-    switch result {
-    case let .success(payload):
-      displayResult = .init(header: "Success", payload: payload.debugDescription)
-    case let .failure(error):
-      displayResult = .init(header: "Failure", payload: error.localizedDescription)
-    default:
-      displayResult = .init(header: "", payload: "")
+    withAnimation {
+      switch result {
+      case let .success(payload):
+        status = .success(payload.debugDescription)
+      case let .failure(error):
+        status = .failure(error.localizedDescription)
+      default:
+        status = .idle
+      }
     }
-  }
-
-  private func startProgress() {
-    inProgress = true
-    displayResult = .init(header: "", payload: "")
   }
 }
 
@@ -118,7 +110,10 @@ struct CardFormContent: View {
             environment: .sandbox,
             secretKey: "sk_x"
           ),
-          fieldOptions: .init(cvv: .init(display: .required), postalCode: .init(display: .required)),
+          fieldOptions: .init(
+            cvv: .init(display: .required),
+            postalCode: .init(display: .required)
+          ),
           styleOptions: .default
         )
       )

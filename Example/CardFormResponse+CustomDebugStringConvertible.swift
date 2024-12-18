@@ -28,7 +28,7 @@ extension TokenizeResponse: CustomDebugStringConvertible {
 extension PaymentResponse: CustomDebugStringConvertible {
   public var debugDescription: String {
     """
-    Refund Response:
+    Payment Response:
       - ID: \(id)
       - Payment Token: \(paymentToken)
       - Details:
