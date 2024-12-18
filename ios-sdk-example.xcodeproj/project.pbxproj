@@ -459,7 +459,7 @@
 			repositoryURL = "https://github.com/seamlesspay/seamlesspay-ios";
 			requirement = {
 				kind = exactVersion;
-				version = "2.3.0-rc1";
+				version = "2.3.0-rc1.1";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
