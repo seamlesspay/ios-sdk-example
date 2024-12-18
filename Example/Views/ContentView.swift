@@ -15,7 +15,7 @@ enum DemoAuth {
 }
 
 struct ContentView: View {
-  @State private var cardFormContentType: CardFormContentType?
+  @State private var contentType: ContentType?
 
   private let unifiedColorPalette: ColorPalette = {
     let cornerRadius: CGFloat = 5.0
@@ -70,16 +70,19 @@ struct ContentView: View {
       List {
         Section {
           Button("SingleLine Card Form") {
-            self.cardFormContentType = .single
+            self.contentType = .single
           }
           Button("Multiline Card Form") {
-            self.cardFormContentType = .multi
+            self.contentType = .multi
+          }
+          Button("Apple Pay Button") {
+            self.contentType = .applePay
           }
         } header: {
           Text("UI Components")
         }
       }
-      .sheet(item: $cardFormContentType) { contentType in
+      .sheet(item: $contentType) { contentType in
         NavigationStack {
           Group {
             switch contentType {
@@ -118,11 +121,19 @@ struct ContentView: View {
                   iconSet: .none
                 )
               )
+            case .applePay:
+              ApplePayContent(
+                config: .init(
+                  environment: DemoAuth.environment,
+                  secretKey: DemoAuth.secretKey,
+                  proxyAccountId: DemoAuth.proxyAccountId
+                )
+              )
             }
           }
           .navigationBarItems(
             trailing: Button("Done") {
-              self.cardFormContentType = .none
+              self.contentType = .none
             }
           )
         }

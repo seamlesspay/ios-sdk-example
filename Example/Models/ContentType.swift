@@ -7,7 +7,12 @@
 
 import Foundation
 
-struct DisplayResult {
-  let header: String
-  let payload: String
+enum ContentType: String, Identifiable {
+  var id: String {
+    rawValue
+  }
+
+  case single
+  case multi
+  case applePay
 }
