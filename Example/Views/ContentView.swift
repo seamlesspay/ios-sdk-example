@@ -75,8 +75,11 @@ struct ContentView: View {
           Button("Multiline Card Form") {
             self.contentType = .multi
           }
-          Button("Apple Pay Button") {
+          Button {
             self.contentType = .applePay
+          } label: {
+            Text("Apple Pay Button")
+              .withApplePaySimulatorNotice()
           }
         } header: {
           Text("UI Components")

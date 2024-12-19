@@ -43,29 +43,36 @@ struct ApplePayContent: View {
       }
       .foregroundColor(status.color)
 
-      if let applePayHandler, applePayHandler.canPerformPayments {
-        ApplePayButtonUI {
-          withAnimation {
-            status = .processing
-          }
-
-          applePayHandler.presentApplePayFor(ChargeRequest(amount: 100)) { result in
+      if let applePayHandler {
+        if applePayHandler.canPerformPayments {
+          ApplePayButtonUI {
             withAnimation {
-              switch result {
-              case let .success(response):
-                status = .success(response.debugDescription)
-              case let .failure(error):
-                status = .failure(error.localizedDescription)
-              case .canceled:
-                status = .failure("Payment was canceled by the user.")
+              status = .processing
+            }
+
+            applePayHandler.presentApplePayFor(ChargeRequest(amount: 100)) { result in
+              withAnimation {
+                switch result {
+                case let .success(response):
+                  status = .success(response.debugDescription)
+                case let .failure(error):
+                  status = .failure(error.localizedDescription)
+                case .canceled:
+                  status = .failure("Payment was canceled by the user.")
+                }
               }
             }
           }
+          .frame(width: 200)
+          .frame(height: 50)
+          .withApplePaySimulatorNotice()
+        } else {
+          Text(
+            "Payment processing is not available. The `ApplePayHandler.canPerformPayments` is `false`. Please check SeamlessPay SDK configuration. And your device's capabilities to satisfy the `PKPaymentAuthorizationController.canMakePayments()`"
+          )
         }
-        .frame(width: 200)
-        .frame(height: 50)
       } else {
-        Text("Apple Pay not available")
+        ProgressView()
       }
     }
     .padding()
