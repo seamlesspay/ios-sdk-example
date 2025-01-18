@@ -1,4 +1,5 @@
 {
+  "originHash" : "385516b2eeba6fe80f1cae94aeba79a544ec04682fbb216d10217062607fdb46",
   "pins" : [
     {
       "identity" : "seamlesspay-ios",
@@ -6,9 +7,9 @@
       "location" : "https://github.com/seamlesspay/seamlesspay-ios",
       "state" : {
         "revision" : "6455a9a6822db4d8b3086cfa816335086980d120",
-        "version" : "2.3.0-rc2"
+        "version" : "2.3.0"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

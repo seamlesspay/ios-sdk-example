@@ -17,54 +17,6 @@ enum DemoAuth {
 struct ContentView: View {
   @State private var contentType: ContentType?
 
-  private let unifiedColorPalette: ColorPalette = {
-    let cornerRadius: CGFloat = 5.0
-
-    let primaryColor = UIColor(
-      red: 59 / 255,
-      green: 130 / 255,
-      blue: 246 / 255,
-      alpha: 1
-    )
-
-    let dangerColor = UIColor(
-      red: 207 / 255,
-      green: 102 / 255,
-      blue: 121 / 255,
-      alpha: 1
-    )
-
-    let neutralColor = UIColor(
-      red: 42 / 255,
-      green: 42 / 255,
-      blue: 42 / 255,
-      alpha: 1
-    )
-
-    return .init(
-      theme: ThemeColors(
-        neutral: neutralColor,
-        primary: primaryColor,
-        danger: dangerColor
-      ),
-      fieldColors: .init(
-        background: .init(
-          inactive: .systemGray6,
-          focusValid: .systemGray6,
-          focusInvalid: .systemGray6,
-          invalid: .systemGray6
-        ),
-        hint: .none,
-        icon: .none,
-        label: .none,
-        outline: .none,
-        text: .none
-      ),
-      errorMessage: dangerColor,
-      header: neutralColor
-    )
-  }()
-
   var body: some View {
     NavigationView {
       List {
@@ -109,20 +61,7 @@ struct ContentView: View {
                   cvv: FieldConfiguration(display: .required),
                   postalCode: FieldConfiguration(display: .required)
                 ),
-                styleOptions: StyleOptions(
-                  colors: Colors(
-                    light: unifiedColorPalette,
-                    dark: unifiedColorPalette
-                  ),
-                  shapes: Shapes(
-                    cornerRadius: 5.0
-                  ),
-                  typography: Typography(
-                    font: UIFont.systemFont(ofSize: 18),
-                    scale: 1.0
-                  ),
-                  iconSet: .none
-                )
+                styleOptions: .default
               )
             case .applePay:
               ApplePayContent(
