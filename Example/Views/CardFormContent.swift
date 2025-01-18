@@ -24,30 +24,12 @@ struct CardFormContent: View {
   ) -> Void
 
   var body: some View {
-    VStack(spacing: 44) {
-      VStack {
+    ScrollView {
+      VStack(spacing: 16) {
         Text(header)
           .fontWeight(.bold)
         cardFromRepresentable
-          .padding(.horizontal)
-      }
-
-      VStack(spacing: 16) {
-        Text(status.header)
-          .lineLimit(1)
-          .fontWeight(.bold)
-          .foregroundColor(status.color)
-        if status.inProgress {
-          ProgressView()
-            .frame(
-              maxWidth: .infinity,
-              alignment: .center
-            )
-            .foregroundColor(status.color)
-        } else {
-          Text(status.payload)
-            .multilineTextAlignment(.leading)
-        }
+          .frame(height: 350)
 
         HStack {
           actionButton(title: "Tokenize") {
@@ -66,9 +48,21 @@ struct CardFormContent: View {
             }
           }
         }
+
+        Text(status.header)
+          .lineLimit(1)
+          .fontWeight(.bold)
+          .foregroundColor(status.color)
+        if status.inProgress {
+          ProgressView()
+            .foregroundColor(status.color)
+        } else {
+          Text(status.payload)
+            .multilineTextAlignment(.leading)
+        }
       }
+      .padding(.horizontal)
     }
-    .frame(maxWidth: .infinity, alignment: .center)
   }
 
   @ViewBuilder

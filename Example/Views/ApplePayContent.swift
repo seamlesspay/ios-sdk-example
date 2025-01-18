@@ -22,27 +22,6 @@ struct ApplePayContent: View {
 
   var body: some View {
     VStack(spacing: 16) {
-      Group {
-        Text(status.header)
-          .lineLimit(1)
-          .fontWeight(.bold)
-        if let iconName = status.iconName {
-          Image(systemName: iconName)
-        }
-        if status.inProgress {
-          ProgressView()
-            .frame(
-              maxWidth: .infinity,
-              alignment: .center
-            )
-        } else {
-          Text(status.payload)
-            .multilineTextAlignment(.leading)
-            .lineLimit(.max)
-        }
-      }
-      .foregroundColor(status.color)
-
       if let applePayHandler {
         if applePayHandler.canPerformPayments {
           ApplePayButtonUI {
@@ -74,6 +53,25 @@ struct ApplePayContent: View {
       } else {
         ProgressView()
       }
+
+      Group {
+        HStack {
+          if let iconName = status.iconName {
+            Image(systemName: iconName)
+          }
+          Text(status.header)
+            .lineLimit(1)
+            .fontWeight(.bold)
+        }
+        if status.inProgress {
+          ProgressView()
+        } else {
+          Text(status.payload)
+            .multilineTextAlignment(.leading)
+            .lineLimit(.max)
+        }
+      }
+      .foregroundColor(status.color)
     }
     .padding()
     .task {
