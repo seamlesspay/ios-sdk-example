@@ -9,9 +9,9 @@ import SwiftUI
 import SeamlessPay
 
 enum DemoAuth {
-  static let secretKey: String = "sk_XXXXXXXXXXXXXXXXXXXXXXXXXX"
-  static let environment: SeamlessPay.Environment = .staging
-  static let proxyAccountId: String? = "MRT_XXXXXXXXXXXXXXXXXXXXXXXXXX"
+  static let secretKey: String = "sk_01D8GYH576BJYWWSJH0E3XZDCZ"
+  static let environment: SeamlessPay.Environment = .sandbox
+  static let proxyAccountId: String? = .none
 }
 
 struct ContentView: View {
@@ -21,9 +21,6 @@ struct ContentView: View {
     NavigationView {
       List {
         Section {
-          Button("SingleLine Card Form") {
-            self.contentType = .single
-          }
           Button("Multiline Card Form") {
             self.contentType = .multi
           }
@@ -41,15 +38,7 @@ struct ContentView: View {
         NavigationStack {
           Group {
             switch contentType {
-            case .single:
-              SingleLineCardFormContent(
-                config: .init(
-                  environment: DemoAuth.environment,
-                  secretKey: DemoAuth.secretKey,
-                  proxyAccountId: DemoAuth.proxyAccountId
-                ),
-                fieldOptions: .default
-              )
+
             case .multi:
               MultiLineCardFormContent(
                 config: .init(

@@ -43,35 +43,3 @@ class MultiLineCardFormUICoordinator: NSObject, CardFormDelegate {
     print("is MultiLineCardForm valid = ", form.isValid)
   }
 }
-
-struct SingleLineCardFormUI: UIViewRepresentable {
-  private let cardForm: SingleLineCardForm
-
-  init(cardForm: SingleLineCardForm) {
-    self.cardForm = cardForm
-  }
-
-  func makeUIView(context: Context) -> SingleLineCardForm {
-    return cardForm
-  }
-
-  func updateUIView(_ uiView: SingleLineCardForm, context: Context) {}
-
-  func makeCoordinator() -> SingleLineCardFormUICoordinator {
-    let coordinator = SingleLineCardFormUICoordinator(cardFormUI: self)
-    cardForm.delegate = coordinator
-    return coordinator
-  }
-}
-
-class SingleLineCardFormUICoordinator: NSObject, CardFormDelegate {
-  let cardFormUI: SingleLineCardFormUI
-  init(cardFormUI: SingleLineCardFormUI) {
-    self.cardFormUI = cardFormUI
-  }
-
-  // MARK: CardFormDelegate
-  func cardFormDidChange(_ form: CardForm) {
-    print("is SingleLineCardForm valid = ", form.isValid)
-  }
-}
