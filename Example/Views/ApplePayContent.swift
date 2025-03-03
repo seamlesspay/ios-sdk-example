@@ -29,7 +29,7 @@ struct ApplePayContent: View {
               status = .processing
             }
 
-            applePayHandler.presentApplePayFor(ChargeRequest(amount: 100)) { result in
+            applePayHandler.presentApplePayFor(ChargeRequest(amount: 125)) { result in
               withAnimation {
                 switch result {
                 case let .success(response):

@@ -6,6 +6,7 @@
 	<array>
 		<string>merchant.com.seamlesspay.byom-sandbox</string>
 		<string>merchant.com.seamlesspay.byom-test</string>
+		<string>merchant.com.seamlesspay.byom-production-verifier</string>
 	</array>
 </dict>
 </plist>

@@ -38,12 +38,12 @@ struct CardFormContent: View {
             }
           }
           actionButton(title: "Pay") {
-            charge(ChargeRequest(amount: 100)) {
+            charge(ChargeRequest(amount: 125)) {
               processResult($0)
             }
           }
           actionButton(title: "Refund") {
-            refund(RefundRequest(amount: 100)) {
+            refund(RefundRequest(amount: 125)) {
               processResult($0)
             }
           }
