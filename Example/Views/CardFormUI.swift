@@ -8,38 +8,58 @@
 import SwiftUI
 import SeamlessPay
 
-struct MultiLineCardFormUI: UIViewRepresentable {
-  private let cardForm: MultiLineCardForm
+struct CardFormUI: UIViewRepresentable {
+  private let cardForm: CardForm
 
-  init(cardForm: MultiLineCardForm) {
+  init(cardForm: CardForm) {
     self.cardForm = cardForm
   }
 
-  func makeUIView(context: Context) -> MultiLineCardForm {
+  func makeUIView(context: Context) -> CardForm {
     return cardForm
   }
 
-  func updateUIView(_ uiView: MultiLineCardForm, context: Context) {}
+  func updateUIView(_ uiView: CardForm, context: Context) {}
 
-  func makeCoordinator() -> MultiLineCardFormUICoordinator {
-    let coordinator = MultiLineCardFormUICoordinator(cardFormUI: self)
+  func makeCoordinator() -> CardFormUICoordinator {
+    let coordinator = CardFormUICoordinator(cardFormUI: self)
     cardForm.delegate = coordinator
     return coordinator
   }
+  
+  func tokenize(
+    completion: ((Result<TokenizeResponse, APIError>?) -> Void)?
+  ) {
+    cardForm.tokenize(completion: completion)
+  }
+  
+  func charge(
+    _ request: ChargeRequest,
+    completion: ((Result<PaymentResponse, APIError>?) -> Void)?
+  ) {
+    cardForm.charge(request, completion: completion)
+  }
+  
+  func refund(
+    _ request: RefundRequest,
+    completion: ((Result<PaymentResponse, APIError>?) -> Void)?
+  ) {
+    cardForm.refund(request, completion: completion)
+  }
 }
 
-class MultiLineCardFormUICoordinator: NSObject, CardFormDelegate {
-  let cardFormUI: MultiLineCardFormUI
-  init(cardFormUI: MultiLineCardFormUI) {
+class CardFormUICoordinator: NSObject, CardFormDelegate {
+  let cardFormUI: CardFormUI
+  init(cardFormUI: CardFormUI) {
     self.cardFormUI = cardFormUI
   }
 
   // MARK: CardFormDelegate
   func cardFormDidChange(_ form: CardForm) {
-    print("is MultiLineCardForm valid = ", form.isValid)
+    print("is CardForm valid = ", form.isValid)
   }
 
   func cardFormWillEndEditing(forReturn form: CardForm) {
-    print("is MultiLineCardForm valid = ", form.isValid)
+    print("is CardForm valid = ", form.isValid)
   }
 }

@@ -21,7 +21,7 @@ struct ContentView: View {
     NavigationView {
       List {
         Section {
-          Button("Multiline Card Form") {
+          Button("Card Form") {
             self.contentType = .cardForm
           }
           Button {
@@ -39,7 +39,8 @@ struct ContentView: View {
           Group {
             switch contentType {
             case .cardForm:
-              MultiLineCardFormContent(
+              CardFormContent(
+                header: "Card Form",
                 config: .init(
                   environment: DemoAuth.environment,
                   secretKey: DemoAuth.secretKey,
