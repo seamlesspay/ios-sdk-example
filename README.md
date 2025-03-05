@@ -20,6 +20,7 @@ enum DemoAuth {
 You can also modify the field configuration yourself and initialize UI components with this data.
 
 ```swift
+<<<<<<< HEAD
 init(config: SeamlessPay.ClientConfiguration, type: CardFormContentType) {
     switch type {
     case .single:
@@ -35,6 +36,21 @@ init(config: SeamlessPay.ClientConfiguration, type: CardFormContentType) {
       )
     }
   }
+=======
+  let config = SeamlessPay.ClientConfiguration(
+    environment: .sandbox,
+    secretKey: "sk_XXXXXXXXXXXXXXXXXXXXXXXXXX",
+    proxyAccountId: "MRT_XXXXXXXXXXXXXXXXXXXXXXXXXX"
+  )
+
+  cardForm = CardForm(
+    config: config,
+    fieldOptions: FieldOptions.default,
+    styleOptions: StyleOptions.default
+  )
+
+  applePayHandler = await ApplePayHandler(config: config)
+>>>>>>> 99f348d (feat: [EXI-19] Update card form components; replace MultiLineCardForm with CardForm and update related references)
 ```
 
 ## Build and Run

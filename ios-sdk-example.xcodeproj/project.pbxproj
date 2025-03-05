@@ -34,9 +34,13 @@
 		63991E8B2C4EBF28009C71D8 /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = 63991E8A2C4EBF28009C71D8 /* SeamlessPay */; };
 		63CB0D0A2D7633F600BE28B0 /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = 63CB0D092D7633F600BE28B0 /* SeamlessPay */; };
 		63CB0D0D2D7643D300BE28B0 /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = 63CB0D0C2D7643D300BE28B0 /* SeamlessPay */; };
+<<<<<<< HEAD
 		63CB0D102D7643EF00BE28B0 /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = 63CB0D0F2D7643EF00BE28B0 /* SeamlessPay */; };
 		63D145A22BF5F0540010451D /* MultiLineCardFormContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D145A12BF5F0540010451D /* MultiLineCardFormContent.swift */; };
 		63D145A42BF60B360010451D /* CardFormResponse+CustomDebugStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D145A32BF60B360010451D /* CardFormResponse+CustomDebugStringConvertible.swift */; };
+=======
+		63D145A42BF60B360010451D /* SDKResponse+CustomDebugStringConvertible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D145A32BF60B360010451D /* SDKResponse+CustomDebugStringConvertible.swift */; };
+>>>>>>> 99f348d (feat: [EXI-19] Update card form components; replace MultiLineCardForm with CardForm and update related references)
 		63D58E5E2D0780C6007B33EC /* ApplePayButtonUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63D58E5D2D0780C6007B33EC /* ApplePayButtonUI.swift */; };
 		63DE0DCD2C7512E700DA1E86 /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = 63DE0DCC2C7512E700DA1E86 /* SeamlessPay */; };
 		63DE0DD02C751B1500DA1E86 /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = 63DE0DCF2C751B1500DA1E86 /* SeamlessPay */; };
@@ -44,6 +48,12 @@
 		63E12E152D05E32700596EFF /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = 63E12E142D05E32700596EFF /* SeamlessPay */; };
 		63E12E172D05E3F700596EFF /* ApplePayContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E12E162D05E3F700596EFF /* ApplePayContent.swift */; };
 		63EA21042CF79B9000F0AA6D /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = 63EA21032CF79B9000F0AA6D /* SeamlessPay */; };
+<<<<<<< HEAD
+=======
+		C86306F42D78777C002899CA /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C86306F32D78777C002899CA /* SeamlessPay */; };
+		C86306FB2D78D23E002899CA /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C86306FA2D78D23E002899CA /* SeamlessPay */; };
+		C86306FE2D78DF4E002899CA /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C86306FD2D78DF4E002899CA /* SeamlessPay */; };
+>>>>>>> 99f348d (feat: [EXI-19] Update card form components; replace MultiLineCardForm with CardForm and update related references)
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,8 +69,12 @@
 		63604E972D0DA3E700328124 /* ios-sdk-example.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ios-sdk-example.entitlements"; sourceTree = "<group>"; };
 		63604ED92D1450A300328124 /* ApplePaySimulatorNotice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePaySimulatorNotice.swift; sourceTree = "<group>"; };
 		63635CD52C6CF07D005E5F03 /* CardFormUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardFormUI.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		63D145A12BF5F0540010451D /* MultiLineCardFormContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiLineCardFormContent.swift; sourceTree = "<group>"; };
 		63D145A32BF60B360010451D /* CardFormResponse+CustomDebugStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CardFormResponse+CustomDebugStringConvertible.swift"; sourceTree = "<group>"; };
+=======
+		63D145A32BF60B360010451D /* SDKResponse+CustomDebugStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SDKResponse+CustomDebugStringConvertible.swift"; sourceTree = "<group>"; };
+>>>>>>> 99f348d (feat: [EXI-19] Update card form components; replace MultiLineCardForm with CardForm and update related references)
 		63D58E5D2D0780C6007B33EC /* ApplePayButtonUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayButtonUI.swift; sourceTree = "<group>"; };
 		63E12E162D05E3F700596EFF /* ApplePayContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayContent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,6 +88,7 @@
 				63CB0D0D2D7643D300BE28B0 /* SeamlessPay in Frameworks */,
 				63DE0DDF2C760A7F00DA1E86 /* SeamlessPay in Frameworks */,
 				6367EA102C4E858C00CAB2BF /* SeamlessPay in Frameworks */,
+				C86306FE2D78DF4E002899CA /* SeamlessPay in Frameworks */,
 				638AF6E22CF37B4C0013E3E4 /* SeamlessPay in Frameworks */,
 				638AF6E52CF37B830013E3E4 /* SeamlessPay in Frameworks */,
 				63370D4D2C1F4378009511AA /* SeamlessPay in Frameworks */,
@@ -88,6 +103,10 @@
 				6312C9E62BEBB74400F99DC6 /* SeamlessPay in Frameworks */,
 				6306E17A2CE8C7DB00E90989 /* SeamlessPay in Frameworks */,
 				63604EA22D1373D900328124 /* SeamlessPay in Frameworks */,
+<<<<<<< HEAD
+=======
+				C86306FB2D78D23E002899CA /* SeamlessPay in Frameworks */,
+>>>>>>> 99f348d (feat: [EXI-19] Update card form components; replace MultiLineCardForm with CardForm and update related references)
 				634888262CA19386000900B1 /* SeamlessPay in Frameworks */,
 				63DE0DCD2C7512E700DA1E86 /* SeamlessPay in Frameworks */,
 				63991E8B2C4EBF28009C71D8 /* SeamlessPay in Frameworks */,
@@ -142,7 +161,6 @@
 			isa = PBXGroup;
 			children = (
 				6312C9D12BEBB6EB00F99DC6 /* ContentView.swift */,
-				63D145A12BF5F0540010451D /* MultiLineCardFormContent.swift */,
 				63E12E162D05E3F700596EFF /* ApplePayContent.swift */,
 				635C30B52CB2B3C700D4D647 /* SingleLineCardFormContent.swift */,
 				63635CD52C6CF07D005E5F03 /* CardFormUI.swift */,
@@ -208,7 +226,13 @@
 				63604EA12D1373D900328124 /* SeamlessPay */,
 				63CB0D092D7633F600BE28B0 /* SeamlessPay */,
 				63CB0D0C2D7643D300BE28B0 /* SeamlessPay */,
+<<<<<<< HEAD
 				63CB0D0F2D7643EF00BE28B0 /* SeamlessPay */,
+=======
+				C86306F32D78777C002899CA /* SeamlessPay */,
+				C86306FA2D78D23E002899CA /* SeamlessPay */,
+				C86306FD2D78DF4E002899CA /* SeamlessPay */,
+>>>>>>> 99f348d (feat: [EXI-19] Update card form components; replace MultiLineCardForm with CardForm and update related references)
 			);
 			productName = Demo;
 			productReference = 6312C9CC2BEBB6EB00F99DC6 /* ios-sdk-example.app */;
@@ -239,7 +263,11 @@
 			);
 			mainGroup = 6312C9C32BEBB6EB00F99DC6;
 			packageReferences = (
+<<<<<<< HEAD
 				63CB0D0E2D7643EF00BE28B0 /* XCRemoteSwiftPackageReference "seamlesspay-ios" */,
+=======
+				C86306FC2D78DF4E002899CA /* XCRemoteSwiftPackageReference "seamlesspay-ios" */,
+>>>>>>> 99f348d (feat: [EXI-19] Update card form components; replace MultiLineCardForm with CardForm and update related references)
 			);
 			productRefGroup = 6312C9CD2BEBB6EB00F99DC6 /* Products */;
 			projectDirPath = "";
@@ -267,7 +295,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63D145A22BF5F0540010451D /* MultiLineCardFormContent.swift in Sources */,
 				63604EDA2D1450A300328124 /* ApplePaySimulatorNotice.swift in Sources */,
 				635C30B62CB2B3C700D4D647 /* SingleLineCardFormContent.swift in Sources */,
 				6312C9D22BEBB6EB00F99DC6 /* ContentView.swift in Sources */,
@@ -490,12 +517,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+<<<<<<< HEAD
 		63CB0D0E2D7643EF00BE28B0 /* XCRemoteSwiftPackageReference "seamlesspay-ios" */ = {
+=======
+		C86306FC2D78DF4E002899CA /* XCRemoteSwiftPackageReference "seamlesspay-ios" */ = {
+>>>>>>> 99f348d (feat: [EXI-19] Update card form components; replace MultiLineCardForm with CardForm and update related references)
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/seamlesspay/seamlesspay-ios";
 			requirement = {
 				kind = exactVersion;
+<<<<<<< HEAD
 				version = 2.4.3;
+=======
+				version = "2.5.0-rc2";
+>>>>>>> 99f348d (feat: [EXI-19] Update card form components; replace MultiLineCardForm with CardForm and update related references)
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -594,6 +629,22 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SeamlessPay;
 		};
+<<<<<<< HEAD
+=======
+		C86306F32D78777C002899CA /* SeamlessPay */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SeamlessPay;
+		};
+		C86306FA2D78D23E002899CA /* SeamlessPay */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SeamlessPay;
+		};
+		C86306FD2D78DF4E002899CA /* SeamlessPay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C86306FC2D78DF4E002899CA /* XCRemoteSwiftPackageReference "seamlesspay-ios" */;
+			productName = SeamlessPay;
+		};
+>>>>>>> 99f348d (feat: [EXI-19] Update card form components; replace MultiLineCardForm with CardForm and update related references)
 /* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6312C9C42BEBB6EB00F99DC6 /* Project object */;

@@ -12,6 +12,7 @@ struct CardFormContent: View {
   @State var status: RequestStatus = .idle
 
   let header: String
+<<<<<<< HEAD
   let cardFromRepresentable: AnyView
   let tokenize: (((Result<TokenizeResponse, SeamlessPayError>?) -> Void)?) -> Void
   let charge: (
@@ -22,28 +23,45 @@ struct CardFormContent: View {
     _ request: RefundRequest,
     ((Result<PaymentResponse, SeamlessPayError>?) -> Void)?
   ) -> Void
+=======
+  let cardFormOrigin: CardForm
+  
+  init(
+    header: String,
+    config: SeamlessPay.ClientConfiguration,
+    fieldOptions: SeamlessPay.FieldOptions,
+    styleOptions: SeamlessPay.StyleOptions
+  ) {
+    self.header = header
+    cardFormOrigin = CardForm(
+      config: config,
+      fieldOptions: fieldOptions,
+      styleOptions: styleOptions
+    )
+  }
+>>>>>>> 99f348d (feat: [EXI-19] Update card form components; replace MultiLineCardForm with CardForm and update related references)
 
   var body: some View {
     ScrollView {
       VStack(spacing: 16) {
         Text(header)
           .fontWeight(.bold)
-        cardFromRepresentable
+        cardForm
           .frame(height: 350)
 
         HStack {
           actionButton(title: "Tokenize") {
-            tokenize {
+            cardForm.tokenize {
               processResult($0)
             }
           }
           actionButton(title: "Pay") {
-            charge(ChargeRequest(amount: 125)) {
+            cardForm.charge(ChargeRequest(amount: 125)) {
               processResult($0)
             }
           }
           actionButton(title: "Refund") {
-            refund(RefundRequest(amount: 125)) {
+            cardForm.refund(RefundRequest(amount: 125)) {
               processResult($0)
             }
           }
@@ -63,6 +81,12 @@ struct CardFormContent: View {
       }
       .padding(.horizontal)
     }
+  }
+  
+  var cardForm: CardFormUI {
+    CardFormUI(
+      cardForm: cardFormOrigin
+    )
   }
 
   @ViewBuilder
@@ -96,29 +120,16 @@ struct CardFormContent: View {
 
 #Preview {
   CardFormContent(
-    header: "Multiline Card Form",
-    cardFromRepresentable: AnyView(
-      MultiLineCardFormUI(
-        cardForm: MultiLineCardForm(
-          config: .init(
-            environment: .sandbox,
-            secretKey: "sk_x"
-          ),
-          fieldOptions: .init(
-            cvv: .init(display: .required),
-            postalCode: .init(display: .required)
-          ),
-          styleOptions: .default
-        )
-      )
+    header: "Card Form",
+    config: .init(
+      environment: DemoAuth.environment,
+      secretKey: DemoAuth.secretKey,
+      proxyAccountId: DemoAuth.proxyAccountId
     ),
-    tokenize: { completion in
-
-    },
-    charge: { _, completion in
-
-    },
-    refund: { _, completion in
-    }
+    fieldOptions: FieldOptions(
+      cvv: FieldConfiguration(display: .required),
+      postalCode: FieldConfiguration(display: .required)
+    ),
+    styleOptions: .default
   )
 }

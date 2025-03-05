@@ -21,11 +21,16 @@ struct ContentView: View {
     NavigationView {
       List {
         Section {
+<<<<<<< HEAD
           Button("SingleLine Card Form") {
             self.contentType = .single
           }
           Button("Multiline Card Form") {
             self.contentType = .multi
+=======
+          Button("Card Form") {
+            self.contentType = .cardForm
+>>>>>>> 99f348d (feat: [EXI-19] Update card form components; replace MultiLineCardForm with CardForm and update related references)
           }
           Button {
             self.contentType = .applePay
@@ -41,6 +46,7 @@ struct ContentView: View {
         NavigationStack {
           Group {
             switch contentType {
+<<<<<<< HEAD
             case .single:
               SingleLineCardFormContent(
                 config: .init(
@@ -52,6 +58,11 @@ struct ContentView: View {
               )
             case .multi:
               MultiLineCardFormContent(
+=======
+            case .cardForm:
+              CardFormContent(
+                header: "Card Form",
+>>>>>>> 99f348d (feat: [EXI-19] Update card form components; replace MultiLineCardForm with CardForm and update related references)
                 config: .init(
                   environment: DemoAuth.environment,
                   secretKey: DemoAuth.secretKey,
