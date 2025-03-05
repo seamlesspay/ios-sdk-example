@@ -26,7 +26,7 @@ You can also modify the field configuration yourself and initialize components w
     proxyAccountId: "MRT_XXXXXXXXXXXXXXXXXXXXXXXXXX"
   )
 
-  cardForm = MultiLineCardForm(
+  cardForm = CardForm(
     config: config,
     fieldOptions: FieldOptions.default,
     styleOptions: StyleOptions.default
