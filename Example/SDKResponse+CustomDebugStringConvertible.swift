@@ -52,3 +52,44 @@ extension PaymentResponse: CustomDebugStringConvertible {
     """
   }
 }
+
+extension APIError: CustomDebugStringConvertible {
+  public var debugDescription: String {
+    """
+    API Error:
+      - Kind: \(kind.name)
+      - Status Code: \(statusCode ?? "N/A")
+      - Status Description: \(statusDescription ?? "N/A")
+      - Errors:
+          \((errors ?? []).map {
+            "- Message: \($0.message), Field Name: \($0.fieldName ?? "N/A")"
+          }
+          .joined(separator: "\n"))
+    """
+  }
+}
+
+extension APIError.ErrorKind {
+  var name: String {
+    switch self {
+    case .badRequest:
+      return "Bad Request"
+    case .unauthorized:
+      return "Unauthorized"
+    case .declined:
+      return "Declined"
+    case .forbidden:
+      return "Forbidden"
+    case .unprocessable:
+      return "Unprocessable"
+    case .rateLimit:
+      return "Rate Limit"
+    case .internal:
+      return "Internal"
+    case .unavailable:
+      return "Unavailable"
+    case .unknown:
+      return "Unknown"
+    }
+  }
+}
