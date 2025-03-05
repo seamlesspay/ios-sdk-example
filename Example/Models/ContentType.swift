@@ -12,7 +12,6 @@ enum ContentType: String, Identifiable {
     rawValue
   }
 
-  case single
-  case multi
+  case cardForm
   case applePay
 }

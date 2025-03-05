@@ -35,7 +35,7 @@ struct ApplePayContent: View {
                 case let .success(response):
                   status = .success(response.debugDescription)
                 case let .failure(error):
-                  status = .failure(error.localizedDescription)
+                  status = .failure(error.debugDescription)
                 case .canceled:
                   status = .failure("Payment was canceled by the user.")
                 }

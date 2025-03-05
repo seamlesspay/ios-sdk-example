@@ -21,11 +21,8 @@ struct ContentView: View {
     NavigationView {
       List {
         Section {
-          Button("SingleLine Card Form") {
-            self.contentType = .single
-          }
           Button("Multiline Card Form") {
-            self.contentType = .multi
+            self.contentType = .cardForm
           }
           Button {
             self.contentType = .applePay
@@ -41,16 +38,7 @@ struct ContentView: View {
         NavigationStack {
           Group {
             switch contentType {
-            case .single:
-              SingleLineCardFormContent(
-                config: .init(
-                  environment: DemoAuth.environment,
-                  secretKey: DemoAuth.secretKey,
-                  proxyAccountId: DemoAuth.proxyAccountId
-                ),
-                fieldOptions: .default
-              )
-            case .multi:
+            case .cardForm:
               MultiLineCardFormContent(
                 config: .init(
                   environment: DemoAuth.environment,
