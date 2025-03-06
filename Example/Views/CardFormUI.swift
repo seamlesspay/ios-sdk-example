@@ -55,11 +55,11 @@ class CardFormUICoordinator: NSObject, CardFormDelegate {
   }
 
   // MARK: CardFormDelegate
-  func cardFormDidChange(_ form: CardForm) {
+  func cardFormDidChange(_ form: CardFormProtocol) {
     print("is CardForm valid = ", form.isValid)
   }
 
-  func cardFormWillEndEditing(forReturn form: CardForm) {
+  func cardFormWillEndEditing(forReturn form: CardFormProtocol) {
     print("is CardForm valid = ", form.isValid)
   }
 }
