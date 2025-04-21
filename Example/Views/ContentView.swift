@@ -55,12 +55,25 @@ struct ContentView: View {
       }
       .sheet(item: $contentType) { type in
         NavigationStack {
-          sheetContent(for: type)
-            .navigationBarItems(
-              trailing: Button("Done") {
-                self.contentType = .none
-              }
-            )
+          Group {
+            switch type {
+            case .cardForm:
+              TransactionOptionsView()
+            case .applePay:
+              ApplePayContent(
+                config: .init(
+                  environment: DemoAuth.environment,
+                  secretKey: DemoAuth.secretKey,
+                  proxyAccountId: DemoAuth.proxyAccountId
+                )
+              )
+            }
+          }
+          .navigationBarItems(
+            trailing: Button("Done") {
+              self.contentType = .none
+            }
+          )
         }
       }
       .navigationTitle("SDK Examples")
@@ -70,34 +83,6 @@ struct ContentView: View {
       .onAppear {
         updateAppearance()
       }
-    }
-  }
-  
-  @ViewBuilder
-  private func sheetContent(for contentType: ContentType) -> some View {
-    switch contentType {
-    case .cardForm:
-      CardFormContent(
-        header: "Card Form",
-        config: .init(
-          environment: DemoAuth.environment,
-          secretKey: DemoAuth.secretKey,
-          proxyAccountId: DemoAuth.proxyAccountId
-        ),
-        fieldOptions: FieldOptions(
-          cvv: FieldConfiguration(display: .required),
-          postalCode: FieldConfiguration(display: .required)
-        ),
-        styleOptions: .default
-      )
-    case .applePay:
-      ApplePayContent(
-        config: .init(
-          environment: DemoAuth.environment,
-          secretKey: DemoAuth.secretKey,
-          proxyAccountId: DemoAuth.proxyAccountId
-        )
-      )
     }
   }
 }
