@@ -43,6 +43,7 @@
 		63EA21042CF79B9000F0AA6D /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = 63EA21032CF79B9000F0AA6D /* SeamlessPay */; };
 		C81801452D9EA428006E7338 /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C81801442D9EA428006E7338 /* SeamlessPay */; };
 		C84371942D95A4BC007E2484 /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C84371932D95A4BC007E2484 /* SeamlessPay */; };
+		C84674522DB257B5006B2580 /* TransactionOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C84674512DB257B5006B2580 /* TransactionOptionsView.swift */; };
 		C86306F42D78777C002899CA /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C86306F32D78777C002899CA /* SeamlessPay */; };
 		C86306FB2D78D23E002899CA /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C86306FA2D78D23E002899CA /* SeamlessPay */; };
 		C8B5323A2D9A8F1D00F3004A /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C8B532392D9A8F1D00F3004A /* SeamlessPay */; };
@@ -63,6 +64,7 @@
 		63D145A32BF60B360010451D /* SDKResponse+CustomDebugStringConvertible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SDKResponse+CustomDebugStringConvertible.swift"; sourceTree = "<group>"; };
 		63D58E5D2D0780C6007B33EC /* ApplePayButtonUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayButtonUI.swift; sourceTree = "<group>"; };
 		63E12E162D05E3F700596EFF /* ApplePayContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayContent.swift; sourceTree = "<group>"; };
+		C84674512DB257B5006B2580 /* TransactionOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionOptionsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 				63635CD52C6CF07D005E5F03 /* CardFormUI.swift */,
 				63D58E5D2D0780C6007B33EC /* ApplePayButtonUI.swift */,
 				635C30BC2CB2C66800D4D647 /* CardFormContent.swift */,
+				C84674512DB257B5006B2580 /* TransactionOptionsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 				63E12E172D05E3F700596EFF /* ApplePayContent.swift in Sources */,
 				63635CD62C6CF07D005E5F03 /* CardFormUI.swift in Sources */,
 				635C30BD2CB2C66800D4D647 /* CardFormContent.swift in Sources */,
+				C84674522DB257B5006B2580 /* TransactionOptionsView.swift in Sources */,
 				6312C9D02BEBB6EB00F99DC6 /* ExampleApp.swift in Sources */,
 				635C30B92CB2B4EA00D4D647 /* RequestStatus.swift in Sources */,
 				63D145A42BF60B360010451D /* SDKResponse+CustomDebugStringConvertible.swift in Sources */,
@@ -424,9 +428,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -456,9 +459,8 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

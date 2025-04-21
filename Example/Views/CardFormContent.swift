@@ -8,19 +8,37 @@
 import SwiftUI
 import SeamlessPay
 
+private extension Transaction {
+  var cents: Int {
+    // Convert string to decimal number
+    guard let decimal = Decimal(string: amount) else { return 0 }
+        
+    // Multiply by 100 to convert dollars to cents and round to nearest cent
+    let cents = decimal * 100
+    return NSDecimalNumber(decimal: cents).intValue
+  }
+  
+  var formattedAmount: String {
+    let numberFormatter = NumberFormatter()
+    numberFormatter.numberStyle = .currency
+    numberFormatter.currencyCode = "USD"
+    let amount = NSNumber(value: Double(cents) / 100.0)
+    return numberFormatter.string(from: amount) ?? "$0.00"
+  }
+}
+
 struct CardFormContent: View {
   @State var status: RequestStatus = .idle
-
-  let header: String
   let cardFormOrigin: CardForm
+  let transaction: Transaction
   
   init(
-    header: String,
+    transaction: Transaction,
     config: SeamlessPay.ClientConfiguration,
     fieldOptions: SeamlessPay.FieldOptions,
     styleOptions: SeamlessPay.StyleOptions
   ) {
-    self.header = header
+    self.transaction = transaction
     cardFormOrigin = CardForm(
       config: config,
       fieldOptions: fieldOptions,
@@ -29,64 +47,94 @@ struct CardFormContent: View {
   }
 
   var body: some View {
-    ScrollView {
-      VStack(spacing: 16) {
-        Text(header)
-          .fontWeight(.bold)
+    ZStack {
+      ScrollView {
         cardForm
           .frame(height: 350)
-
-        HStack {
-          actionButton(title: "Tokenize") {
-            cardForm.tokenize {
-              processResult($0)
-            }
-          }
-          actionButton(title: "Pay") {
-            cardForm.charge(ChargeRequest(amount: 125)) {
-              processResult($0)
-            }
-          }
-          actionButton(title: "Refund") {
-            cardForm.refund(RefundRequest(amount: 125)) {
-              processResult($0)
-            }
-          }
-        }
-
-        Text(status.header)
-          .lineLimit(1)
-          .fontWeight(.bold)
-          .foregroundColor(status.color)
-        if status.inProgress {
-          ProgressView()
-            .foregroundColor(status.color)
-        } else {
-          Text(status.payload)
-            .multilineTextAlignment(.leading)
-        }
+          .disabled(status.inProgress)
+          .padding(.horizontal)
+        Spacer(minLength: 100)
+          hintText
+            .padding(.horizontal)
       }
-      .padding(.horizontal)
+      .background(Color(UIColor.systemGroupedBackground))
+      
+      if status.inProgress {
+        HStack {
+          ProgressView()
+            .foregroundColor(.primary)
+          Text("Processing")
+            .foregroundColor(.primary)
+        }
+        .padding()
+      }
     }
+    .safeAreaInset(edge: .bottom) {
+      continueButton
+        .disabled(status.inProgress)
+    }
+    .overlay {
+      if status.inProgress {
+        Color.black.opacity(0.25)
+          .ignoresSafeArea()
+      }
+    }
+    .navigationTitle("Card Form")
   }
   
-  var cardForm: CardFormUI {
+  private var cardForm: CardFormUI {
     CardFormUI(
       cardForm: cardFormOrigin
     )
   }
 
-  @ViewBuilder
-  private func actionButton(title: String, action: @escaping () -> Void) -> some View {
+  private var continueButton: some View {
     Button {
-      withAnimation {
-        status = .processing
-        action()
+      status = .processing
+      
+      switch transaction.kind {
+      case .tokenizeOnly:
+        
+        cardForm.tokenize {
+          processResult($0)
+        }
+      case .charge:
+        cardForm.charge(
+          ChargeRequest(amount: transaction.cents)
+        ) {
+          processResult($0)
+        }
+      case .refund:
+        cardForm.refund(
+          RefundRequest(amount: transaction.cents)
+        ) {
+          processResult($0)
+        }
       }
     } label: {
-      Text(title)
+      Text("Continue")
+        .fontWeight(.semibold)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 8)
     }
     .buttonStyle(.borderedProminent)
+    .padding(16)
+    .foregroundColor(.white)
+  }
+
+  private var hintText: some View {
+    var hint = "You are about to "
+    
+    switch transaction.kind {
+    case .tokenizeOnly:
+      hint += "tokenize your card"
+    case .charge:
+      hint += "charge \(transaction.formattedAmount)"
+    case .refund:
+      hint += "refund \(transaction.formattedAmount)"
+    }
+    
+    return Text(hint)
   }
 
   private func processResult(
@@ -107,7 +155,7 @@ struct CardFormContent: View {
 
 #Preview {
   CardFormContent(
-    header: "Card Form",
+    transaction: .init(kind: .charge, amount: "2"),
     config: .init(
       environment: DemoAuth.environment,
       secretKey: DemoAuth.secretKey,
