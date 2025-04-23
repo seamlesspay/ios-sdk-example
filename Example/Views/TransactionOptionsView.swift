@@ -8,16 +8,6 @@
 import SwiftUI
 import SeamlessPay
 
-struct Transaction {
-  enum Kind: CaseIterable {
-    case tokenizeOnly
-    case charge
-    case refund
-  }
-
-  let kind: Kind
-  let amount: String
-}
 
 private extension Transaction.Kind {
   var name: String {

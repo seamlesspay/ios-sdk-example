@@ -142,25 +142,6 @@ private extension CardFormContent {
   }
 }
 
-private extension Transaction {
-  var cents: Int {
-    // Convert string to decimal number
-    guard let decimal = Decimal(string: amount) else { return 0 }
-
-    // Multiply by 100 to convert dollars to cents and round to nearest cent
-    let cents = decimal * 100
-    return NSDecimalNumber(decimal: cents).intValue
-  }
-
-  var formattedAmount: String {
-    let numberFormatter = NumberFormatter()
-    numberFormatter.numberStyle = .currency
-    numberFormatter.currencyCode = "USD"
-    let amount = NSNumber(value: Double(cents) / 100.0)
-    return numberFormatter.string(from: amount) ?? "$0.00"
-  }
-}
-
 #Preview {
   CardFormContent(
     transaction: .init(kind: .charge, amount: "2"),
