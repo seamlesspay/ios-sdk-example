@@ -10,10 +10,9 @@ import PassKit
 import SeamlessPay
 
 struct ApplePayContent: View {
-  @State var status: RequestStatus = .idle
-
+  @State private var result: PaymentResponseResult?
+  @State private var isRquestInProgress: Bool = false
   @State var applePayHandler: ApplePayHandler?
-
   private let config: ClientConfiguration
 
   init(config: ClientConfiguration) {
@@ -26,18 +25,21 @@ struct ApplePayContent: View {
         if applePayHandler.canPerformPayments {
           ApplePayButtonUI {
             withAnimation {
-              status = .processing
+              isRquestInProgress = true
             }
 
-            applePayHandler.presentApplePayFor(ChargeRequest(amount: 125)) { result in
+            applePayHandler.presentApplePayFor(
+              ChargeRequest(amount: 125)
+            ) { result in
               withAnimation {
+                isRquestInProgress = false
                 switch result {
                 case let .success(response):
-                  status = .success(response.debugDescription)
+                  self.result = .init(kind: .success, value: response.debugDescription)
                 case let .failure(error):
-                  status = .failure(error.debugDescription)
+                  self.result = .init(kind: .failure, value: error.localizedDescription)
                 case .canceled:
-                  status = .failure("Payment was canceled by the user.")
+                  self.result = .none
                 }
               }
             }
@@ -53,27 +55,25 @@ struct ApplePayContent: View {
       } else {
         ProgressView()
       }
-
-      Group {
-        HStack {
-          if let iconName = status.iconName {
-            Image(systemName: iconName)
-          }
-          Text(status.header)
-            .lineLimit(1)
-            .fontWeight(.bold)
-        }
-        if status.inProgress {
-          ProgressView()
-        } else {
-          Text(status.payload)
-            .multilineTextAlignment(.leading)
-            .lineLimit(.max)
-        }
+      
+      if isRquestInProgress {
+        ProgressView()
       }
-      .foregroundColor(status.color)
     }
     .padding()
+    .overlay {
+      if isRquestInProgress {
+        Color.black.opacity(0.25)
+          .ignoresSafeArea()
+      }
+    }
+    .navigationTitle("Card Form")
+    .navigationBarTitleDisplayMode(.inline)
+    .navigationDestination(item: $result) { value in
+      PaymentResponseView(
+        result: value
+      )
+    }
     .task {
       self.applePayHandler = await ApplePayHandler(config: config)
     }
