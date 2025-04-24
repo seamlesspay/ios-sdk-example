@@ -8,30 +8,12 @@
 import SwiftUI
 import SeamlessPay
 
-private extension Transaction {
-  var cents: Int {
-    // Convert string to decimal number
-    guard let decimal = Decimal(string: amount) else { return 0 }
-        
-    // Multiply by 100 to convert dollars to cents and round to nearest cent
-    let cents = decimal * 100
-    return NSDecimalNumber(decimal: cents).intValue
-  }
-  
-  var formattedAmount: String {
-    let numberFormatter = NumberFormatter()
-    numberFormatter.numberStyle = .currency
-    numberFormatter.currencyCode = "USD"
-    let amount = NSNumber(value: Double(cents) / 100.0)
-    return numberFormatter.string(from: amount) ?? "$0.00"
-  }
-}
-
 struct CardFormContent: View {
-  @State var status: RequestStatus = .idle
-  let cardFormOrigin: CardForm
-  let transaction: Transaction
-  
+  @State private var result: PaymentResponseResult?
+  @State private var isRquestInProgress: Bool = false
+  private let cardFormOrigin: CardForm
+  private let transaction: Transaction
+
   init(
     transaction: Transaction,
     config: SeamlessPay.ClientConfiguration,
@@ -51,15 +33,15 @@ struct CardFormContent: View {
       ScrollView {
         cardForm
           .frame(height: 350)
-          .disabled(status.inProgress)
+          .disabled(isRquestInProgress)
           .padding(.horizontal)
         Spacer(minLength: 100)
-          hintText
-            .padding(.horizontal)
+        hintText
+          .padding(.horizontal)
       }
       .background(Color(UIColor.systemGroupedBackground))
-      
-      if status.inProgress {
+
+      if isRquestInProgress {
         HStack {
           ProgressView()
             .foregroundColor(.primary)
@@ -71,17 +53,23 @@ struct CardFormContent: View {
     }
     .safeAreaInset(edge: .bottom) {
       continueButton
-        .disabled(status.inProgress)
+        .disabled(isRquestInProgress)
     }
     .overlay {
-      if status.inProgress {
+      if isRquestInProgress {
         Color.black.opacity(0.25)
           .ignoresSafeArea()
       }
     }
     .navigationTitle("Card Form")
+    .navigationBarTitleDisplayMode(.inline)
+    .navigationDestination(item: $result) { value in
+      PaymentResponseView(
+        result: value
+      )
+    }
   }
-  
+
   private var cardForm: CardFormUI {
     CardFormUI(
       cardForm: cardFormOrigin
@@ -90,27 +78,7 @@ struct CardFormContent: View {
 
   private var continueButton: some View {
     Button {
-      status = .processing
-      
-      switch transaction.kind {
-      case .tokenizeOnly:
-        
-        cardForm.tokenize {
-          processResult($0)
-        }
-      case .charge:
-        cardForm.charge(
-          ChargeRequest(amount: transaction.cents)
-        ) {
-          processResult($0)
-        }
-      case .refund:
-        cardForm.refund(
-          RefundRequest(amount: transaction.cents)
-        ) {
-          processResult($0)
-        }
-      }
+      handleContinueButtonTap()
     } label: {
       Text("Continue")
         .fontWeight(.semibold)
@@ -124,7 +92,7 @@ struct CardFormContent: View {
 
   private var hintText: some View {
     var hint = "You are about to "
-    
+
     switch transaction.kind {
     case .tokenizeOnly:
       hint += "tokenize your card"
@@ -133,23 +101,63 @@ struct CardFormContent: View {
     case .refund:
       hint += "refund \(transaction.formattedAmount)"
     }
-    
+
     return Text(hint)
   }
+}
 
-  private func processResult(
-    _ result: Result<some CustomDebugStringConvertible, APIError>?
-  ) {
-    withAnimation {
+private extension CardFormContent {
+  func handleContinueButtonTap() {
+    func processResult(
+      _ result: Result<some CustomDebugStringConvertible, APIError>?
+    ) {
+      isRquestInProgress = false
+
       switch result {
       case let .success(payload):
-        status = .success(payload.debugDescription)
+        self.result = .init(kind: .success, value: payload.debugDescription)
       case let .failure(error):
-        status = .failure(error.debugDescription)
+        self.result = .init(kind: .failure, value: error.debugDescription)
       default:
-        status = .idle
+        self.result = .none
       }
     }
+
+    isRquestInProgress = true
+
+    switch transaction.kind {
+    case .tokenizeOnly:
+      cardForm.tokenize(completion: processResult)
+    case .charge:
+      cardForm.charge(
+        ChargeRequest(amount: transaction.cents),
+        completion: processResult
+      )
+    case .refund:
+      cardForm.refund(
+        RefundRequest(amount: transaction.cents),
+        completion: processResult
+      )
+    }
+  }
+}
+
+private extension Transaction {
+  var cents: Int {
+    // Convert string to decimal number
+    guard let decimal = Decimal(string: amount) else { return 0 }
+
+    // Multiply by 100 to convert dollars to cents and round to nearest cent
+    let cents = decimal * 100
+    return NSDecimalNumber(decimal: cents).intValue
+  }
+
+  var formattedAmount: String {
+    let numberFormatter = NumberFormatter()
+    numberFormatter.numberStyle = .currency
+    numberFormatter.currencyCode = "USD"
+    let amount = NSNumber(value: Double(cents) / 100.0)
+    return numberFormatter.string(from: amount) ?? "$0.00"
   }
 }
 
