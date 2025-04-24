@@ -30,7 +30,7 @@ struct ContentView: View {
   @State private var contentType: ContentType?
 
   var body: some View {
-    NavigationView {
+    NavigationStack {
       List {
         Section {
           Toggle("Dark mode", isOn: $isDarkMode)
