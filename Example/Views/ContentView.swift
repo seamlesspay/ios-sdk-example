@@ -15,6 +15,7 @@ enum DemoAuth {
 }
 
 struct ContentView: View {
+  
   enum AppStorageKeys {
     static let isDarkMode = "isDarkMode"
   }
@@ -69,11 +70,6 @@ struct ContentView: View {
               )
             }
           }
-          .navigationBarItems(
-            trailing: Button("Done") {
-              self.contentType = .none
-            }
-          )
         }
       }
       .navigationTitle("SDK Examples")
