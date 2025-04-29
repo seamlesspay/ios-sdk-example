@@ -24,9 +24,8 @@ struct PaymentResponseView: View {
   @Binding var path: [String]
 
   var body: some View {
-    VStack(spacing: 16) {
+    VStack(spacing: 32) {
       StatusHeader(kind: result.kind)
-
       VStack(alignment: .leading, spacing: 8) {
         Text("RESPONSE CODE")
           .font(.caption)

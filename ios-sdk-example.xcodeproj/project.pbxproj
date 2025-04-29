@@ -48,6 +48,8 @@
 		C86656D12DB9064500F5AD41 /* PaymentResponseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86656CF2DB9064500F5AD41 /* PaymentResponseView.swift */; };
 		C86656D62DB92B0F00F5AD41 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86656D52DB92B0F00F5AD41 /* Transaction.swift */; };
 		C8B5323A2D9A8F1D00F3004A /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C8B532392D9A8F1D00F3004A /* SeamlessPay */; };
+		C8FC4B412DC140130048F41D /* CopyButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FC4B402DC140130048F41D /* CopyButton.swift */; };
+		C8FC4B432DC1404E0048F41D /* StatusHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8FC4B422DC1404E0048F41D /* StatusHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +69,8 @@
 		C84674512DB257B5006B2580 /* TransactionOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionOptionsView.swift; sourceTree = "<group>"; };
 		C86656CF2DB9064500F5AD41 /* PaymentResponseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResponseView.swift; sourceTree = "<group>"; };
 		C86656D52DB92B0F00F5AD41 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
+		C8FC4B402DC140130048F41D /* CopyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyButton.swift; sourceTree = "<group>"; };
+		C8FC4B422DC1404E0048F41D /* StatusHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,7 +153,7 @@
 		6312C9DD2BEBB71200F99DC6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C86656CF2DB9064500F5AD41 /* PaymentResponseView.swift */,
+				C8FC4B442DC140C10048F41D /* PaymentResponseView */,
 				6312C9D12BEBB6EB00F99DC6 /* ContentView.swift */,
 				63E12E162D05E3F700596EFF /* ApplePayContent.swift */,
 				63635CD52C6CF07D005E5F03 /* CardFormUI.swift */,
@@ -175,6 +179,16 @@
 				63604ED92D1450A300328124 /* ApplePaySimulatorNotice.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		C8FC4B442DC140C10048F41D /* PaymentResponseView */ = {
+			isa = PBXGroup;
+			children = (
+				C8FC4B422DC1404E0048F41D /* StatusHeader.swift */,
+				C8FC4B402DC140130048F41D /* CopyButton.swift */,
+				C86656CF2DB9064500F5AD41 /* PaymentResponseView.swift */,
+			);
+			path = PaymentResponseView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -283,8 +297,10 @@
 				6312C9D22BEBB6EB00F99DC6 /* ContentView.swift in Sources */,
 				C86656D62DB92B0F00F5AD41 /* Transaction.swift in Sources */,
 				63D58E5E2D0780C6007B33EC /* ApplePayButtonUI.swift in Sources */,
+				C8FC4B432DC1404E0048F41D /* StatusHeader.swift in Sources */,
 				63E12E172D05E3F700596EFF /* ApplePayContent.swift in Sources */,
 				C86656D12DB9064500F5AD41 /* PaymentResponseView.swift in Sources */,
+				C8FC4B412DC140130048F41D /* CopyButton.swift in Sources */,
 				63635CD62C6CF07D005E5F03 /* CardFormUI.swift in Sources */,
 				635C30BD2CB2C66800D4D647 /* CardFormContent.swift in Sources */,
 				C84674522DB257B5006B2580 /* TransactionOptionsView.swift in Sources */,
