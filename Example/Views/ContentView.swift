@@ -9,46 +9,35 @@ import SwiftUI
 import SeamlessPay
 
 enum DemoAuth {
-  static let secretKey: String = "sk_XXXXXXXXXXXXXXXXXXXXXXXXXX"
-  static let environment: SeamlessPay.Environment = .staging
-  static let proxyAccountId: String? = "MRT_XXXXXXXXXXXXXXXXXXXXXXXXXX"
+  static let secretKey: String = "sk_01D8GYH576BJYWWSJH0E3XZDCZ"
+  static let environment: SeamlessPay.Environment = .sandbox
+  static let proxyAccountId: String? = .none
 }
 
 struct ContentView: View {
-  
-  enum AppStorageKeys {
-    static let isDarkMode = "isDarkMode"
-  }
-  
-  @AppStorage(AppStorageKeys.isDarkMode) private var isDarkMode = {
-    if UserDefaults.standard.object(forKey: AppStorageKeys.isDarkMode) == nil {
-      return UITraitCollection.current.userInterfaceStyle == .dark
-    }
-    return UserDefaults.standard.bool(forKey: AppStorageKeys.isDarkMode)
-  }()
-
+  @State private var isDarkMode: Bool = UITraitCollection.current.userInterfaceStyle == .dark
   @State private var contentType: ContentType?
 
   var body: some View {
     NavigationStack {
       List {
         Section {
-          Toggle("Dark mode", isOn: $isDarkMode)
+          Toggle("Dark Mode", isOn: $isDarkMode)
         }
-        
+
         Section {
           Button("Card Form") {
             self.contentType = .cardForm
           }
           .tint(.primary)
-          
+
           Button {
             self.contentType = .applePay
           } label: {
             Text("Apple Pay Button")
               .withApplePaySimulatorNotice()
           }
-          
+
         } header: {
           Text("UI Components")
         }
