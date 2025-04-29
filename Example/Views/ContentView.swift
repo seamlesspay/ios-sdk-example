@@ -17,6 +17,7 @@ enum DemoAuth {
 struct ContentView: View {
   @State private var isDarkMode: Bool = UITraitCollection.current.userInterfaceStyle == .dark
   @State private var contentType: ContentType?
+  @State private var path: [String] = []
 
   var body: some View {
     NavigationStack {
@@ -44,18 +45,19 @@ struct ContentView: View {
         .tint(.primary)
       }
       .sheet(item: $contentType) { type in
-        NavigationStack {
+        NavigationStack(path: $path) {
           Group {
             switch type {
             case .cardForm:
-              TransactionOptionsView()
+              TransactionOptionsView(path: $path)
             case .applePay:
               ApplePayContent(
                 config: .init(
                   environment: DemoAuth.environment,
                   secretKey: DemoAuth.secretKey,
                   proxyAccountId: DemoAuth.proxyAccountId
-                )
+                ),
+                path: $path
               )
             }
           }

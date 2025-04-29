@@ -15,19 +15,19 @@ struct Transaction {
   }
 
   let kind: Kind
-  let amount: String
+  let amountRaw: String
 }
 
 extension Transaction {
   static func charge(amount: String) -> Self {
-    .init(kind: .charge, amount: amount)
+    .init(kind: .charge, amountRaw: amount)
   }
 }
 
 extension Transaction {
   var cents: Int {
     // Convert string to decimal number
-    let amount = amount.replacingOccurrences(of: ",", with: ".")
+    let amount = amountRaw.replacingOccurrences(of: ",", with: ".")
     guard let decimal = Decimal(string: amount) else { return 0 }
 
     // Multiply by 100 to convert dollars to cents and round to nearest cent

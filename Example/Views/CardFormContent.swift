@@ -13,12 +13,15 @@ struct CardFormContent: View {
   @State private var isRquestInProgress: Bool = false
   private let cardFormOrigin: CardForm
   private let transaction: Transaction
+  
+  @Binding var path: [String]
 
   init(
     transaction: Transaction,
     config: SeamlessPay.ClientConfiguration,
     fieldOptions: SeamlessPay.FieldOptions,
-    styleOptions: SeamlessPay.StyleOptions
+    styleOptions: SeamlessPay.StyleOptions,
+    path: Binding<[String]>
   ) {
     self.transaction = transaction
     cardFormOrigin = CardForm(
@@ -26,6 +29,7 @@ struct CardFormContent: View {
       fieldOptions: fieldOptions,
       styleOptions: styleOptions
     )
+    self._path = path
   }
 
   var body: some View {
@@ -61,11 +65,19 @@ struct CardFormContent: View {
           .ignoresSafeArea()
       }
     }
+    .toolbar {
+      ToolbarItem(placement: .navigationBarTrailing) {
+        Button("Done") {
+          path.removeAll()
+        }
+      }
+    }
     .navigationTitle("Card Form")
     .navigationBarTitleDisplayMode(.inline)
     .navigationDestination(item: $result) { value in
       PaymentResponseView(
-        result: value
+        result: value,
+        path: $path
       )
     }
   }
@@ -144,7 +156,7 @@ private extension CardFormContent {
 
 #Preview {
   CardFormContent(
-    transaction: .init(kind: .charge, amount: "2"),
+    transaction: .init(kind: .charge, amountRaw: "2"),
     config: .init(
       environment: DemoAuth.environment,
       secretKey: DemoAuth.secretKey,
@@ -154,6 +166,7 @@ private extension CardFormContent {
       cvv: FieldConfiguration(display: .required),
       postalCode: FieldConfiguration(display: .required)
     ),
-    styleOptions: .default
+    styleOptions: .default,
+    path: .constant([])
   )
 }

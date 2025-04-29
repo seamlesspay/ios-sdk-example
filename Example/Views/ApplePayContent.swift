@@ -12,13 +12,16 @@ import SwiftUI
 struct ApplePayContent: View {
   @State private var result: PaymentResponseResult?
   @State private var isRquestInProgress: Bool = false
-  @State var applePayHandler: ApplePayHandler?
-  private let config: ClientConfiguration
-
   @State private var transaction: Transaction = .charge(amount: "")
+  private let config: ClientConfiguration
+  
+  @State var applePayHandler: ApplePayHandler?
+  @Binding var path: [String]
+  @SwiftUICore.Environment(\.dismiss) var dismiss
 
-  init(config: ClientConfiguration) {
+  init(config: ClientConfiguration, path: Binding<[String]>) {
     self.config = config
+    self._path = path
   }
 
   var body: some View {
@@ -42,11 +45,19 @@ struct ApplePayContent: View {
           .ignoresSafeArea()
       }
     }
-    .navigationTitle("Card Form")
+    .toolbar {
+      ToolbarItem(placement: .navigationBarTrailing) {
+        Button("Done") {
+          dismiss()
+        }
+      }
+    }
+    .navigationTitle("Apple Pay")
     .navigationBarTitleDisplayMode(.inline)
     .navigationDestination(item: $result) { value in
       PaymentResponseView(
-        result: value
+        result: value,
+        path: $path
       )
     }
     .task {
@@ -60,7 +71,7 @@ struct ApplePayContent: View {
         TextField(
           "Amount $",
           text: Binding(
-            get: { transaction.amount },
+            get: { transaction.amountRaw },
             set: { transaction = .charge(amount: $0) }
           )
         )
@@ -92,7 +103,7 @@ struct ApplePayContent: View {
       .frame(width: 200)
       .frame(height: 50)
       .withApplePaySimulatorNotice()
-      .disabled(transaction.amount.isEmpty)
+      .disabled(transaction.amountRaw.isEmpty)
       .padding()
     }
   }
@@ -119,6 +130,7 @@ struct ApplePayContent: View {
     config: .init(
       environment: .sandbox,
       secretKey: .init()
-    )
+    ),
+    path: .constant([])
   )
 }

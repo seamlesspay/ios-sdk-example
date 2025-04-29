@@ -8,7 +8,6 @@
 import SwiftUI
 import SeamlessPay
 
-
 private extension Transaction.Kind {
   var name: String {
     switch self {
@@ -20,7 +19,10 @@ private extension Transaction.Kind {
 }
 
 struct TransactionOptionsView: View {
-  @State private var sTransaction: Transaction = .init(kind: .tokenizeOnly, amount: "")
+  @State private var sTransaction: Transaction = .init(kind: .tokenizeOnly, amountRaw: "")
+  
+  @Binding var path: [String]
+  @SwiftUICore.Environment(\.dismiss) var dismiss
     
   var body: some View {
     Form {
@@ -29,7 +31,7 @@ struct TransactionOptionsView: View {
           Button {
             sTransaction = Transaction(
               kind: transactionType,
-              amount: sTransaction.amount
+              amountRaw: sTransaction.amountRaw
             )
           } label: {
             HStack {
@@ -47,17 +49,28 @@ struct TransactionOptionsView: View {
                 
       if sTransaction.kind != .tokenizeOnly {
         Section {
-          TextField(
-            "Amount $",
-            text: Binding(
-              get: { sTransaction.amount },
-              set: { sTransaction = Transaction(
-                kind: sTransaction.kind,
-                amount: $0
-              ) }
+          HStack(spacing: 32) {
+            Text("Amount")
+              .foregroundColor(.primary)
+            TextField(
+              "$",
+              text: Binding(
+                get: { sTransaction.amountRaw },
+                set: { sTransaction = Transaction(
+                  kind: sTransaction.kind,
+                  amountRaw: $0
+                ) }
+              )
             )
-          )
-          .keyboardType(.decimalPad)
+            .keyboardType(.decimalPad)
+          }
+        }
+      }
+    }
+    .toolbar {
+      ToolbarItem(placement: .navigationBarTrailing) {
+        Button("Done") {
+          dismiss()
         }
       }
     }
@@ -69,18 +82,21 @@ struct TransactionOptionsView: View {
   }
   
   private var continueButton: some View {
-    NavigationLink {
+    NavigationLink(
+      value: "cardFormView",
+      label: {
+        Text("Continue")
+          .fontWeight(.semibold)
+          .frame(maxWidth: .infinity)
+          .padding(.vertical, 8)
+      }
+    )
+    .navigationDestination(for: String.self) { value in
       cardFormView
-    } label: {
-      Text("Continue")
-        .fontWeight(.semibold)
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, 8)
     }
     .buttonStyle(.borderedProminent)
     .padding()
     .foregroundColor(.white)
-    .disabled(sTransaction.kind != .tokenizeOnly && sTransaction.amount.isEmpty)
   }
   
   private var cardFormView: some View {
@@ -95,11 +111,12 @@ struct TransactionOptionsView: View {
         cvv: FieldConfiguration(display: .required),
         postalCode: FieldConfiguration(display: .required)
       ),
-      styleOptions: .default
+      styleOptions: .default,
+      path: $path
     )
   }
 }
 
 #Preview {
-  TransactionOptionsView()
+  TransactionOptionsView(path: .constant([]))
 }
