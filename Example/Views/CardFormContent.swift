@@ -35,16 +35,23 @@ struct CardFormContent: View {
   var body: some View {
     ZStack {
       ScrollView {
+        Spacer(minLength: 24)
         cardForm
           .frame(height: 350)
           .disabled(isRquestInProgress)
           .padding(.horizontal)
-        Spacer(minLength: 100)
-        hintText
-          .padding(.horizontal)
       }
       .background(Color(UIColor.systemGroupedBackground))
-
+      VStack {
+        Spacer()
+        hintText
+          .font(.footnote)
+          .padding(.vertical, 8)
+        continueButton
+          .disabled(isRquestInProgress)
+          .padding(.vertical, 8)
+      }
+      .padding(.horizontal, 16)
       if isRquestInProgress {
         HStack {
           ProgressView()
@@ -54,10 +61,6 @@ struct CardFormContent: View {
         }
         .padding()
       }
-    }
-    .safeAreaInset(edge: .bottom) {
-      continueButton
-        .disabled(isRquestInProgress)
     }
     .overlay {
       if isRquestInProgress {
@@ -98,20 +101,18 @@ struct CardFormContent: View {
         .padding(.vertical, 8)
     }
     .buttonStyle(.borderedProminent)
-    .padding(16)
     .foregroundColor(.white)
   }
 
   private var hintText: some View {
-    var hint = "You are about to "
-
+    let hint: String
     switch transaction.kind {
     case .tokenizeOnly:
-      hint += "tokenize your card"
+      hint = "Tokenization only – no charge will be made"
     case .charge:
-      hint += "charge \(transaction.formattedAmount)"
+      hint = "You are about to charge \(transaction.formattedAmount)"
     case .refund:
-      hint += "refund \(transaction.formattedAmount)"
+      hint = "You are about to refund \(transaction.formattedAmount)"
     }
 
     return Text(hint)

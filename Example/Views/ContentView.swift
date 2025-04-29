@@ -9,9 +9,9 @@ import SwiftUI
 import SeamlessPay
 
 enum DemoAuth {
-  static let secretKey: String = "sk_01D8GYH576BJYWWSJH0E3XZDCZ"
-  static let environment: SeamlessPay.Environment = .sandbox
-  static let proxyAccountId: String? = .none
+  static let secretKey: String = "sk_XXXXXXXXXXXXXXXXXXXXXXXXXX"
+  static let environment: SeamlessPay.Environment = .staging
+  static let proxyAccountId: String? = "MRT_XXXXXXXXXXXXXXXXXXXXXXXXXX"
 }
 
 struct ContentView: View {

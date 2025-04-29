@@ -37,10 +37,7 @@ extension Transaction {
   }
 
   var formattedAmount: String {
-    let numberFormatter = NumberFormatter()
-    numberFormatter.numberStyle = .currency
-    numberFormatter.currencyCode = "USD"
-    let amount = NSNumber(value: Double(cents) / 100.0)
-    return numberFormatter.string(from: amount) ?? "$0.00"
+    let amount = String(format: "$%.2f", Double(cents) / 100.0)
+    return amount
   }
 }
