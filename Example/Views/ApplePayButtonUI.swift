@@ -32,7 +32,7 @@ struct ApplePayButtonUI: UIViewRepresentable {
 
   class Coordinator: NSObject {
     var action: () -> Void
-    var button = PKPaymentButton(paymentButtonType: .buy, paymentButtonStyle: .automatic)
+    var button = PKPaymentButton(paymentButtonType: .inStore, paymentButtonStyle: .automatic)
 
     init(
       action: @escaping () -> Void

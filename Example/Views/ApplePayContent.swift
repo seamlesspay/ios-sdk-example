@@ -14,7 +14,7 @@ struct ApplePayContent: View {
   @State private var isRquestInProgress: Bool = false
   @State private var transaction: Transaction = .charge(amount: "")
   private let config: ClientConfiguration
-  
+
   @State var applePayHandler: ApplePayHandler?
   @Binding var path: [String]
   @SwiftUICore.Environment(\.dismiss) var dismiss
@@ -52,7 +52,7 @@ struct ApplePayContent: View {
         }
       }
     }
-    .navigationTitle("Apple Pay")
+    .navigationTitle("Apple Pay Button")
     .navigationBarTitleDisplayMode(.inline)
     .navigationDestination(item: $result) { value in
       PaymentResponseView(
@@ -68,14 +68,18 @@ struct ApplePayContent: View {
   private var form: some View {
     Form {
       Section {
-        TextField(
-          "Amount $",
-          text: Binding(
-            get: { transaction.amountRaw },
-            set: { transaction = .charge(amount: $0) }
+        HStack(spacing: 32) {
+          Text("Amount")
+            .foregroundColor(.primary)
+          TextField(
+            "$",
+            text: Binding(
+              get: { transaction.amountRaw },
+              set: { transaction = .charge(amount: $0) }
+            )
           )
-        )
-        .keyboardType(.decimalPad)
+          .keyboardType(.decimalPad)
+        }
       }
     }
     .safeAreaInset(edge: .bottom) {
@@ -100,10 +104,8 @@ struct ApplePayContent: View {
           }
         }
       }
-      .frame(width: 200)
-      .frame(height: 50)
+      .frame(height: 54)
       .withApplePaySimulatorNotice()
-      .disabled(transaction.amountRaw.isEmpty)
       .padding()
     }
   }
