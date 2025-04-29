@@ -14,14 +14,14 @@ struct CardFormContent: View {
   private let cardFormOrigin: CardForm
   private let transaction: Transaction
   
-  @Binding var path: [String]
+  @Binding var contentType: ContentType?
 
   init(
     transaction: Transaction,
     config: SeamlessPay.ClientConfiguration,
     fieldOptions: SeamlessPay.FieldOptions,
     styleOptions: SeamlessPay.StyleOptions,
-    path: Binding<[String]>
+    contentType: Binding<ContentType?>
   ) {
     self.transaction = transaction
     cardFormOrigin = CardForm(
@@ -29,7 +29,7 @@ struct CardFormContent: View {
       fieldOptions: fieldOptions,
       styleOptions: styleOptions
     )
-    self._path = path
+    _contentType = contentType
   }
 
   var body: some View {
@@ -68,7 +68,7 @@ struct CardFormContent: View {
     .toolbar {
       ToolbarItem(placement: .navigationBarTrailing) {
         Button("Done") {
-          path.removeAll()
+          contentType = .none
         }
       }
     }
@@ -77,7 +77,7 @@ struct CardFormContent: View {
     .navigationDestination(item: $result) { value in
       PaymentResponseView(
         result: value,
-        path: $path
+        contentType: $contentType
       )
     }
   }
@@ -167,6 +167,6 @@ private extension CardFormContent {
       postalCode: FieldConfiguration(display: .required)
     ),
     styleOptions: .default,
-    path: .constant([])
+    contentType: .constant(.cardForm)
   )
 }

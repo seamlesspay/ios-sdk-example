@@ -21,8 +21,8 @@ private extension Transaction.Kind {
 struct TransactionOptionsView: View {
   @State private var sTransaction: Transaction = .init(kind: .tokenizeOnly, amountRaw: "")
   
-  @Binding var path: [String]
   @SwiftUICore.Environment(\.dismiss) var dismiss
+  @Binding var contentType: ContentType?
     
   var body: some View {
     Form {
@@ -70,7 +70,8 @@ struct TransactionOptionsView: View {
     .toolbar {
       ToolbarItem(placement: .navigationBarTrailing) {
         Button("Done") {
-          dismiss()
+//          dismiss()
+          contentType = .none
         }
       }
     }
@@ -82,18 +83,15 @@ struct TransactionOptionsView: View {
   }
   
   private var continueButton: some View {
-    NavigationLink(
-      value: "cardFormView",
-      label: {
-        Text("Continue")
-          .fontWeight(.semibold)
-          .frame(maxWidth: .infinity)
-          .padding(.vertical, 8)
-      }
-    )
-    .navigationDestination(for: String.self) { value in
+    NavigationLink {
       cardFormView
+    } label: {
+      Text("Continue")
+        .fontWeight(.semibold)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 8)
     }
+    
     .buttonStyle(.borderedProminent)
     .padding()
     .foregroundColor(.white)
@@ -112,11 +110,11 @@ struct TransactionOptionsView: View {
         postalCode: FieldConfiguration(display: .required)
       ),
       styleOptions: .default,
-      path: $path
+      contentType: $contentType
     )
   }
 }
 
 #Preview {
-  TransactionOptionsView(path: .constant([]))
+  TransactionOptionsView(contentType: .constant(.cardForm))
 }

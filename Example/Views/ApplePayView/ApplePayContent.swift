@@ -6,61 +6,12 @@
 // *
 
 import PassKit
-import SeamlessPay
 import SwiftUI
+import SeamlessPay
 
 struct ApplePayContent: View {
-  @State private var result: PaymentResponseResult?
-  @State private var transaction: Transaction = .charge(amount: "")
-  private let config: ClientConfiguration
-
-  @State var applePayHandler: ApplePayHandler?
-  @Binding var path: [String]
-  @SwiftUICore.Environment(\.dismiss) var dismiss
-
-  init(config: ClientConfiguration, path: Binding<[String]>) {
-    self.config = config
-    _path = path
-  }
-
-  var body: some View {
-    VStack(spacing: 16) {
-      if let applePayHandler {
-        ApplePayInnerView(
-          applePayHandler: applePayHandler,
-          transaction: $transaction,
-          onPaymentResult: { result in
-            self.result = result
-          }
-        )
-      } else {
-        ProgressView()
-      }
-    }
-    .toolbar {
-      ToolbarItem(placement: .navigationBarTrailing) {
-        Button("Done") {
-          dismiss()
-        }
-      }
-    }
-    .navigationTitle("Apple Pay Button")
-    .navigationBarTitleDisplayMode(.inline)
-    .navigationDestination(item: $result) { value in
-      PaymentResponseView(
-        result: value,
-        path: $path
-      )
-    }
-    .task {
-      self.applePayHandler = await ApplePayHandler(config: config)
-    }
-  }
-}
-
-struct ApplePayInnerView: View {
   @State private var isRquestInProgress: Bool = false
-
+  
   let applePayHandler: ApplePayHandler
   @Binding var transaction: Transaction
   let onPaymentResult: (PaymentResponseResult?) -> Void
@@ -142,14 +93,4 @@ struct ApplePayInnerView: View {
       ProgressView()
     }
   }
-}
-
-#Preview {
-  ApplePayContent(
-    config: .init(
-      environment: .sandbox,
-      secretKey: .init()
-    ),
-    path: .constant([])
-  )
 }
