@@ -19,20 +19,19 @@ struct PaymentResponseResult: Hashable {
 }
 
 struct PaymentResponseView: View {
-  let result: PaymentResponseResult
+  let result: PaymentResponseResult?
 
-  @Binding var path: [String]
+  @Binding var contentType: ContentType?
 
   var body: some View {
-    VStack(spacing: 16) {
-      StatusHeader(kind: result.kind)
-
+    VStack(spacing: 32) {
+      StatusHeader(kind: result?.kind ?? .success)
       VStack(alignment: .leading, spacing: 8) {
         Text("RESPONSE CODE")
           .font(.caption)
           .foregroundColor(.secondary)
 
-        Text(result.value)
+        Text(result?.value ?? "")
           .font(.system(.body, design: .monospaced))
           .padding()
           .frame(maxWidth: .infinity, alignment: .leading)
@@ -42,13 +41,13 @@ struct PaymentResponseView: View {
 
       Spacer()
 
-      CopyButton(textToCopy: result.value)
+      CopyButton(textToCopy: result?.value ?? "")
     }
     .padding()
     .toolbar {
       ToolbarItem(placement: .navigationBarTrailing) {
         Button("Done") {
-          path.removeAll()
+          contentType = .none
         }
       }
     }
@@ -98,7 +97,7 @@ struct PaymentResponseView: View {
                 - Tip: 10.00
           """
       ),
-      path: .constant([])
+      contentType: .constant(.cardForm)
     )
   }
 }
@@ -118,7 +117,7 @@ struct PaymentResponseView: View {
                 - Message: Insufficient funds, Field Name: payment
           """
       ),
-      path: .constant([])
+      contentType: .constant(.cardForm)
     )
   }
 }

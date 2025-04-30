@@ -15,40 +15,29 @@ enum DemoAuth {
 }
 
 struct ContentView: View {
-  
-  enum AppStorageKeys {
-    static let isDarkMode = "isDarkMode"
-  }
-  
-  @AppStorage(AppStorageKeys.isDarkMode) private var isDarkMode = {
-    if UserDefaults.standard.object(forKey: AppStorageKeys.isDarkMode) == nil {
-      return UITraitCollection.current.userInterfaceStyle == .dark
-    }
-    return UserDefaults.standard.bool(forKey: AppStorageKeys.isDarkMode)
-  }()
-
+  @State private var isDarkMode: Bool = UITraitCollection.current.userInterfaceStyle == .dark
   @State private var contentType: ContentType?
 
   var body: some View {
     NavigationStack {
       List {
         Section {
-          Toggle("Dark mode", isOn: $isDarkMode)
+          Toggle("Dark Mode", isOn: $isDarkMode)
         }
-        
+
         Section {
           Button("Card Form") {
             self.contentType = .cardForm
           }
           .tint(.primary)
-          
+
           Button {
             self.contentType = .applePay
           } label: {
             Text("Apple Pay Button")
               .withApplePaySimulatorNotice()
           }
-          
+
         } header: {
           Text("UI Components")
         }
@@ -59,14 +48,15 @@ struct ContentView: View {
           Group {
             switch type {
             case .cardForm:
-              TransactionOptionsView()
+              TransactionOptionsView(contentType: $contentType)
             case .applePay:
-              ApplePayContent(
+              ApplePayView(
                 config: .init(
                   environment: DemoAuth.environment,
                   secretKey: DemoAuth.secretKey,
                   proxyAccountId: DemoAuth.proxyAccountId
-                )
+                ),
+                contentType: $contentType
               )
             }
           }

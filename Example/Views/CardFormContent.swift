@@ -13,12 +13,15 @@ struct CardFormContent: View {
   @State private var isRquestInProgress: Bool = false
   private let cardFormOrigin: CardForm
   private let transaction: Transaction
+  
+  @Binding var contentType: ContentType?
 
   init(
     transaction: Transaction,
     config: SeamlessPay.ClientConfiguration,
     fieldOptions: SeamlessPay.FieldOptions,
-    styleOptions: SeamlessPay.StyleOptions
+    styleOptions: SeamlessPay.StyleOptions,
+    contentType: Binding<ContentType?>
   ) {
     self.transaction = transaction
     cardFormOrigin = CardForm(
@@ -26,21 +29,29 @@ struct CardFormContent: View {
       fieldOptions: fieldOptions,
       styleOptions: styleOptions
     )
+    _contentType = contentType
   }
 
   var body: some View {
     ZStack {
       ScrollView {
+        Spacer(minLength: 24)
         cardForm
           .frame(height: 350)
           .disabled(isRquestInProgress)
           .padding(.horizontal)
-        Spacer(minLength: 100)
-        hintText
-          .padding(.horizontal)
       }
       .background(Color(UIColor.systemGroupedBackground))
-
+      VStack {
+        Spacer()
+        hintText
+          .font(.footnote)
+          .padding(.vertical, 8)
+        continueButton
+          .disabled(isRquestInProgress)
+          .padding(.vertical, 8)
+      }
+      .padding(.horizontal, 16)
       if isRquestInProgress {
         HStack {
           ProgressView()
@@ -51,21 +62,25 @@ struct CardFormContent: View {
         .padding()
       }
     }
-    .safeAreaInset(edge: .bottom) {
-      continueButton
-        .disabled(isRquestInProgress)
-    }
     .overlay {
       if isRquestInProgress {
         Color.black.opacity(0.25)
           .ignoresSafeArea()
       }
     }
+    .toolbar {
+      ToolbarItem(placement: .navigationBarTrailing) {
+        Button("Done") {
+          contentType = .none
+        }
+      }
+    }
     .navigationTitle("Card Form")
     .navigationBarTitleDisplayMode(.inline)
     .navigationDestination(item: $result) { value in
       PaymentResponseView(
-        result: value
+        result: value,
+        contentType: $contentType
       )
     }
   }
@@ -86,20 +101,18 @@ struct CardFormContent: View {
         .padding(.vertical, 8)
     }
     .buttonStyle(.borderedProminent)
-    .padding(16)
     .foregroundColor(.white)
   }
 
   private var hintText: some View {
-    var hint = "You are about to "
-
+    let hint: String
     switch transaction.kind {
     case .tokenizeOnly:
-      hint += "tokenize your card"
+      hint = "Tokenization only – no charge will be made"
     case .charge:
-      hint += "charge \(transaction.formattedAmount)"
+      hint = "You are about to charge \(transaction.formattedAmount)"
     case .refund:
-      hint += "refund \(transaction.formattedAmount)"
+      hint = "You are about to refund \(transaction.formattedAmount)"
     }
 
     return Text(hint)
@@ -144,7 +157,7 @@ private extension CardFormContent {
 
 #Preview {
   CardFormContent(
-    transaction: .init(kind: .charge, amount: "2"),
+    transaction: .init(kind: .charge, amountRaw: "2"),
     config: .init(
       environment: DemoAuth.environment,
       secretKey: DemoAuth.secretKey,
@@ -154,6 +167,7 @@ private extension CardFormContent {
       cvv: FieldConfiguration(display: .required),
       postalCode: FieldConfiguration(display: .required)
     ),
-    styleOptions: .default
+    styleOptions: .default,
+    contentType: .constant(.cardForm)
   )
 }
