@@ -5,8 +5,8 @@
 // * LICENSE file in the root directory of this source tree.
 // *
 
-import SeamlessPay
 import SwiftUI
+import SeamlessPay
 
 struct PaymentResponseResult: Hashable {
   enum Kind: Hashable {
@@ -19,19 +19,19 @@ struct PaymentResponseResult: Hashable {
 }
 
 struct PaymentResponseView: View {
-  let result: PaymentResponseResult?
+  let result: PaymentResponseResult
 
   @Binding var contentType: ContentType?
 
   var body: some View {
     VStack(spacing: 32) {
-      StatusHeader(kind: result?.kind ?? .success)
+      StatusHeader(kind: result.kind)
       VStack(alignment: .leading, spacing: 8) {
         Text("RESPONSE CODE")
           .font(.caption)
           .foregroundColor(.secondary)
 
-        Text(result?.value ?? "")
+        Text(result.value)
           .font(.system(.body, design: .monospaced))
           .padding()
           .frame(maxWidth: .infinity, alignment: .leading)
@@ -41,16 +41,11 @@ struct PaymentResponseView: View {
 
       Spacer()
 
-      CopyButton(textToCopy: result?.value ?? "")
+      CopyButton(textToCopy: result.value)
     }
     .padding()
-    .toolbar {
-      ToolbarItem(placement: .navigationBarTrailing) {
-        Button("Done") {
-          contentType = .none
-        }
-      }
-    }
+    .withBackNavigation()
+    .withDoneNavigation(contentType: $contentType)
     .navigationTitle("Card Form")
     .navigationBarTitleDisplayMode(.inline)
     .background(Color(UIColor.systemGroupedBackground))

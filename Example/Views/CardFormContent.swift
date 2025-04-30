@@ -68,13 +68,8 @@ struct CardFormContent: View {
           .ignoresSafeArea()
       }
     }
-    .toolbar {
-      ToolbarItem(placement: .navigationBarTrailing) {
-        Button("Done") {
-          contentType = .none
-        }
-      }
-    }
+    .withBackNavigation()
+    .withDoneNavigation(contentType: $contentType)
     .navigationTitle("Card Form")
     .navigationBarTitleDisplayMode(.inline)
     .navigationDestination(item: $result) { value in

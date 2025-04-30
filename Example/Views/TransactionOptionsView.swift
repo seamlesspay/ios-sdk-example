@@ -5,11 +5,11 @@
 // * LICENSE file in the root directory of this source tree.
 // *
 
-import SwiftUI
 import SeamlessPay
+import SwiftUI
 
-private extension Transaction.Kind {
-  var name: String {
+extension Transaction.Kind {
+  fileprivate var name: String {
     switch self {
     case .tokenizeOnly: return "Tokenize-only"
     case .charge: return "Charge"
@@ -20,10 +20,9 @@ private extension Transaction.Kind {
 
 struct TransactionOptionsView: View {
   @State private var sTransaction: Transaction = .init(kind: .tokenizeOnly, amountRaw: "")
-  
-  @SwiftUICore.Environment(\.dismiss) var dismiss
+
   @Binding var contentType: ContentType?
-    
+
   var body: some View {
     Form {
       Section("Payment Options") {
@@ -46,7 +45,7 @@ struct TransactionOptionsView: View {
           }
         }
       }
-                
+
       if sTransaction.kind != .tokenizeOnly {
         Section {
           HStack(spacing: 32) {
@@ -56,10 +55,12 @@ struct TransactionOptionsView: View {
               "$",
               text: Binding(
                 get: { sTransaction.amountRaw },
-                set: { sTransaction = Transaction(
-                  kind: sTransaction.kind,
-                  amountRaw: $0
-                ) }
+                set: {
+                  sTransaction = Transaction(
+                    kind: sTransaction.kind,
+                    amountRaw: $0
+                  )
+                }
               )
             )
             .keyboardType(.decimalPad)
@@ -67,21 +68,14 @@ struct TransactionOptionsView: View {
         }
       }
     }
-    .toolbar {
-      ToolbarItem(placement: .navigationBarTrailing) {
-        Button("Done") {
-//          dismiss()
-          contentType = .none
-        }
-      }
-    }
+    .withDoneNavigation(contentType: $contentType)
     .navigationTitle("Card Form")
     .navigationBarTitleDisplayMode(.inline)
     .safeAreaInset(edge: .bottom) {
       continueButton
     }
   }
-  
+
   private var continueButton: some View {
     NavigationLink {
       cardFormView
@@ -91,12 +85,12 @@ struct TransactionOptionsView: View {
         .frame(maxWidth: .infinity)
         .padding(.vertical, 8)
     }
-    
+
     .buttonStyle(.borderedProminent)
     .padding()
     .foregroundColor(.white)
   }
-  
+
   private var cardFormView: some View {
     CardFormContent(
       transaction: sTransaction,
