@@ -36,7 +36,6 @@ struct ApplePayView: View {
         ProgressView()
       }
     }
-    .withBackNavigation()
     .withDoneNavigation(contentType: $contentType)
     .navigationTitle("Apple Pay Button")
     .navigationBarTitleDisplayMode(.inline)
