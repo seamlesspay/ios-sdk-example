@@ -36,14 +36,8 @@ struct ApplePayView: View {
         ProgressView()
       }
     }
-    .toolbar {
-      ToolbarItem(placement: .navigationBarTrailing) {
-        Button("Done") {
-          //          dismiss()
-          contentType = .none
-        }
-      }
-    }
+    .withBackNavigation()
+    .withDoneNavigation(contentType: $contentType)
     .navigationTitle("Apple Pay Button")
     .navigationBarTitleDisplayMode(.inline)
     .navigationDestination(item: $result) { value in
