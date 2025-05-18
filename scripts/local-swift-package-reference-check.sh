@@ -10,7 +10,7 @@ if [ ! -f "$PBXPROJ_PATH" ]; then
 fi
 
 # Search for local swift package references in the file
-if grep -q "XCLocalSwiftPackageReference" "$PBXPROJ_PATH"; then
+if ./scripts/has-local-seamlesspay-package.sh "$PBXPROJ_PATH"; then
     echo "Error: Commit blocked. The project.pbxproj file contains a reference to the local swift package."
     echo "Please ensure that you change the local package reference to the published version before making any commits."
     exit 1
