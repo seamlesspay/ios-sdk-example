@@ -49,6 +49,7 @@
 		C8791ED42DE347D900B3A16C /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C8791ED32DE347D900B3A16C /* SeamlessPay */; };
 		C8A551EC2DF0793400DE7B25 /* DiagnosticInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A551EA2DF0793400DE7B25 /* DiagnosticInfoView.swift */; };
 		C8A551EF2DF081DC00DE7B25 /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C8A551EE2DF081DC00DE7B25 /* SeamlessPay */; };
+		C8A551F32DF0829800DE7B25 /* Color+TableBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A551F22DF0829800DE7B25 /* Color+TableBackground.swift */; };
 		C8B5323A2D9A8F1D00F3004A /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C8B532392D9A8F1D00F3004A /* SeamlessPay */; };
 		C8FAE3742DCB7C0900DC486F /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C8FAE3732DCB7C0900DC486F /* SeamlessPay */; };
 		C8FAE37C2DCBDDC200DC486F /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C8FAE37B2DCBDDC200DC486F /* SeamlessPay */; };
@@ -77,6 +78,7 @@
 		C86656CF2DB9064500F5AD41 /* PaymentResponseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentResponseView.swift; sourceTree = "<group>"; };
 		C86656D52DB92B0F00F5AD41 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		C8A551EA2DF0793400DE7B25 /* DiagnosticInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticInfoView.swift; sourceTree = "<group>"; };
+		C8A551F22DF0829800DE7B25 /* Color+TableBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+TableBackground.swift"; sourceTree = "<group>"; };
 		C8FC4B402DC140130048F41D /* CopyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyButton.swift; sourceTree = "<group>"; };
 		C8FC4B422DC1404E0048F41D /* StatusHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusHeader.swift; sourceTree = "<group>"; };
 		C8FC4B482DC14ACA0048F41D /* ApplePayContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayContent.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 		63604ED82D144FDE00328124 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				C8A551F22DF0829800DE7B25 /* Color+TableBackground.swift */,
 				63604ED92D1450A300328124 /* ApplePaySimulatorNotice.swift */,
 			);
 			path = Utils;
@@ -378,6 +381,7 @@
 				C8FC4B602DC2984D0048F41D /* DoneNavigationModifier.swift in Sources */,
 				6312C9D02BEBB6EB00F99DC6 /* ExampleApp.swift in Sources */,
 				63D145A42BF60B360010451D /* SDKResponse+CustomDebugStringConvertible.swift in Sources */,
+				C8A551F32DF0829800DE7B25 /* Color+TableBackground.swift in Sources */,
 				635C30BB2CB2B5E300D4D647 /* ContentType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
