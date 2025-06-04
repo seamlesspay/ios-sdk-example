@@ -11,46 +11,36 @@ import SeamlessPay
 // MARK: - Diagnostic Info View
 struct DiagnosticInfoView: View {
   @Binding var contentType: ContentType?
-  
-  private let environment: SeamlessPay.Environment
-  private let secretKey: String
-  private let proxyAccountId: String?
-  
+  private var diagnosticData: DiagnosticData
+
   init(
     environment: SeamlessPay.Environment,
     secretKey: String,
     proxyAccountId: String?,
     contentType: Binding<ContentType?>
   ) {
-    self.environment = environment
-    self.secretKey = secretKey
-    self.proxyAccountId = proxyAccountId
     _contentType = contentType
+    
+    diagnosticData = .init(
+      sdkVersion: SeamlessPaySDK.version,
+      secretKey: secretKey,
+      proxyAccountId: proxyAccountId,
+      environment: environment
+    )
   }
   
   var body: some View {
     VStack(spacing: 32) {
-      VStack(alignment: .leading, spacing: 8) {
-        DiagnosticRow(title: "Environment", value: String(describing: environment))
-        DiagnosticRow(title: "Client Secret", value: masked(secret: secretKey))
-        DiagnosticRow(
-          title: "Proxy Account",
-          value: proxyAccountId.flatMap(masked(secret:)) ?? "N/A"
-        )
-        DiagnosticRow(title: "App Version", value: appVersion)
-        DiagnosticRow(title: "Build Number", value: buildNumber)
-        DiagnosticRow(title: "SDK Version", value: sdkVersion)
-        DiagnosticRow(title: "OS Version", value: osVersion)
-        DiagnosticRow(title: "Device Model", value: deviceModel)
-        DiagnosticRow(title: "Screen Size", value: screenSize)
-      }
-      .padding()
-      .frame(maxWidth: .infinity, alignment: .leading)
-      .background(spTableBackgroundColor)
-      .cornerRadius(8)
-      
+      diagnosticInfoSection()
+        .padding()
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(spTableBackgroundColor)
+        .cornerRadius(8)
       Spacer()
-      CopyButton(title: "Copy Info", textToCopy: copyDiagnosticInfo)
+      CopyButton(
+        title: "Copy Info",
+        textToCopy: diagnosticData.copyDiagnosticInfo
+      )
     }
     .padding()
     .navigationTitle("Diagnostic Info")
@@ -58,28 +48,74 @@ struct DiagnosticInfoView: View {
     .background(Color(UIColor.systemGroupedBackground))
     .withDoneNavigation(contentType: $contentType)
   }
-}
-
-// MARK: - Diagnostic Data
-private extension DiagnosticInfoView {
-  func masked(secret: String) -> String {
-    guard secret.count >= 8 else { return secret }
-    let prefix = String(secret.prefix(4))
+  
+  @ViewBuilder
+  private func diagnosticInfoSection() -> some View {
+    VStack(alignment: .leading, spacing: 12) {
+      DiagnosticRow(
+        title: "Environment",
+        value: String(describing: diagnosticData.environment)
+      )
+      
+      DiagnosticRow(
+        title: "Client Secret",
+        value: masked(secret: diagnosticData.secretKey)
+      )
+      
+      DiagnosticRow(
+        title: "Proxy Account",
+        value: diagnosticData.proxyAccountId.map { masked(secret: $0) } ?? "nil"
+      )
+      
+      DiagnosticRow(
+        title: "App Version",
+        value: diagnosticData.appVersion
+      )
+      
+      DiagnosticRow(
+        title: "Build Number",
+        value: diagnosticData.buildNumber
+      )
+      
+      DiagnosticRow(
+        title: "SDK Version",
+        value: diagnosticData.sdkVersion
+      )
+      
+      DiagnosticRow(
+        title: "OS Version",
+        value: diagnosticData.osVersion
+      )
+      
+      DiagnosticRow(
+        title: "Device Model",
+        value: diagnosticData.deviceModel
+      )
+      
+      DiagnosticRow(
+        title: "Screen Size",
+        value: diagnosticData.screenSize
+      )
+    }
+  }
+  
+  private func masked(secret: String) -> String {
+    guard secret.count >= 7 + 4 else { return secret }
+    let prefix = String(secret.prefix(7))
     let suffix = String(secret.suffix(4))
     let mask = String(repeating: "*", count: 4)
     return "\(prefix)\(mask)\(suffix)"
   }
-  
+}
+
+// MARK: - Diagnostic Data Model
+private struct DiagnosticData {
   var appVersion: String {
     Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown"
   }
   
   var buildNumber: String {
     Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown"
-  }
-  
-  var sdkVersion: String {
-    SeamlessPaySDK.version
   }
   
   var osVersion: String {
@@ -96,22 +132,29 @@ private extension DiagnosticInfoView {
     let scale = UIScreen.main.scale
     let width = Int(bounds.width * scale)
     let height = Int(bounds.height * scale)
-    let dpi = Int(scale * 160) // Approximate DPI calculation
-    return "\(width)x\(height) @\(dpi)dpi"
+    let dpi = Int(scale * 160.0)
+    return "\(width)×\(height) @\(dpi)dpi"
   }
   
+  let sdkVersion: String
+  let secretKey: String
+  let proxyAccountId: String?
+  let environment: SeamlessPay.Environment
+  
   var copyDiagnosticInfo: String {
-    """
-    Environment: \(String(describing: environment))
-    Client Secret: \(secretKey)
-    Proxy Account: \(proxyAccountId ?? "N/A")
-    App Version: \(appVersion)
-    Build Number: \(buildNumber)
-    SDK Version: \(sdkVersion)
-    OS Version: \(osVersion)
-    Device Model: \(deviceModel)
-    Screen Size: \(screenSize)
-    """
+    let components = [
+      "Environment: \(String(describing: environment))",
+      "Client Secret: \(secretKey)",
+      "Proxy Account: \(proxyAccountId ?? "N/A")",
+      "App Version: \(appVersion)",
+      "Build Number: \(buildNumber)",
+      "SDK Version: \(sdkVersion)",
+      "OS Version: \(osVersion)",
+      "Device Model: \(deviceModel)",
+      "Screen Size: \(screenSize)",
+    ]
+    
+    return components.joined(separator: "\n")
   }
 }
 
@@ -123,12 +166,25 @@ struct DiagnosticRow: View {
   var body: some View {
     HStack {
       Text(title)
+        .lineLimit(1)
         .foregroundColor(.primary)
-      Spacer()
+        .multilineTextAlignment(.leading)
+        .frame(width: 120, alignment: .leading)
+      
       Text(value)
+        .lineLimit(1)
         .foregroundColor(.primary)
         .bold()
-        .multilineTextAlignment(.trailing)
+        .multilineTextAlignment(.leading)
     }
   }
+}
+
+#Preview {
+  DiagnosticInfoView(
+    environment: .qat,
+    secretKey: "preview_value",
+    proxyAccountId: "preview_value",
+    contentType: .constant(.diagnosticInfo)
+  )
 }
