@@ -35,13 +35,13 @@ struct PaymentResponseView: View {
           .font(.system(.body, design: .monospaced))
           .padding()
           .frame(maxWidth: .infinity, alignment: .leading)
-          .background(responseCodeBlockBackgroundColor)
+          .background(spTableBackgroundColor)
           .cornerRadius(8)
       }
 
       Spacer()
 
-      CopyButton(textToCopy: result.value)
+      CopyButton(title: "Copy Response", textToCopy: result.value)
     }
     .padding()
     .withBackNavigation()
@@ -49,18 +49,6 @@ struct PaymentResponseView: View {
     .navigationTitle("Card Form")
     .navigationBarTitleDisplayMode(.inline)
     .background(Color(UIColor.systemGroupedBackground))
-  }
-
-  private var responseCodeBlockBackgroundColor: Color {
-    Color(
-      uiColor: UIColor { (traitCollection: UITraitCollection) -> UIColor in
-        if traitCollection.userInterfaceStyle == .dark {
-          return .secondarySystemBackground
-        } else {
-          return .systemBackground
-        }
-      }
-    )
   }
 }
 

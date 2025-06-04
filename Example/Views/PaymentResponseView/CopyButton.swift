@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct CopyButton: View {
+  let title: String
   let textToCopy: String
   @State private var showCopiedFeedback = false
 
@@ -23,7 +24,7 @@ struct CopyButton: View {
     } label: {
       HStack {
         Image(systemName: showCopiedFeedback ? "checkmark" : "doc.on.doc")
-        Text(showCopiedFeedback ? "Copied!" : "Copy Response")
+        Text(showCopiedFeedback ? "Copied!" : title)
       }
       .frame(maxWidth: .infinity)
       .padding(.vertical, 8)
@@ -35,7 +36,7 @@ struct CopyButton: View {
 }
 
 #Preview {
-  CopyButton(textToCopy: "Hello, world!")
+  CopyButton(title: "Copy", textToCopy: "Hello, world!")
     .padding()
 }
     
