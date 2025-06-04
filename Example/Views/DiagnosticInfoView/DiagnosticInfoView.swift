@@ -46,30 +46,17 @@ struct DiagnosticInfoView: View {
       }
       .padding()
       .frame(maxWidth: .infinity, alignment: .leading)
-      .background(responseCodeBlockBackgroundColor)
+      .background(spTableBackgroundColor)
       .cornerRadius(8)
       
       Spacer()
-      CopyButton(textToCopy: copyDiagnosticInfo)
+      CopyButton(title: "Copy Info", textToCopy: copyDiagnosticInfo)
     }
     .padding()
-    .withBackNavigation()
     .navigationTitle("Diagnostic Info")
     .navigationBarTitleDisplayMode(.inline)
     .background(Color(UIColor.systemGroupedBackground))
     .withDoneNavigation(contentType: $contentType)
-  }
-  
-  private var responseCodeBlockBackgroundColor: Color {
-    Color(
-      uiColor: UIColor { (traitCollection: UITraitCollection) -> UIColor in
-        if traitCollection.userInterfaceStyle == .dark {
-          return .secondarySystemBackground
-        } else {
-          return .systemBackground
-        }
-      }
-    )
   }
 }
 
