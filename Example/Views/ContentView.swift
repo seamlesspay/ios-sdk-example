@@ -23,6 +23,10 @@ struct ContentView: View {
       List {
         Section {
           Toggle("Dark Mode", isOn: $isDarkMode)
+          Button("Diagnostic Info") {
+            self.contentType = .diagnosticInfo
+          }
+          .tint(.primary)
         }
 
         Section {
@@ -56,6 +60,13 @@ struct ContentView: View {
                   secretKey: DemoAuth.secretKey,
                   proxyAccountId: DemoAuth.proxyAccountId
                 ),
+                contentType: $contentType
+              )
+            case .diagnosticInfo:
+              DiagnosticInfoView(
+                environment: DemoAuth.environment,
+                secretKey: DemoAuth.secretKey,
+                proxyAccountId: DemoAuth.proxyAccountId,
                 contentType: $contentType
               )
             }
