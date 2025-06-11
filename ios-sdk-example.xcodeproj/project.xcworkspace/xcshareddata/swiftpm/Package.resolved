@@ -6,8 +6,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/seamlesspay/seamlesspay-ios",
       "state" : {
-        "revision" : "c015f1bd34424cad650423303a90d5b3777d3f6a",
-        "version" : "2.5.1"
+        "revision" : "a469cc0608f7c97b88625bba9f90242790e36149",
+        "version" : "2.6.0"
       }
     }
   ],

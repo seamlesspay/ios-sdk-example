@@ -14,4 +14,5 @@ enum ContentType: String, Identifiable {
 
   case cardForm
   case applePay
+  case diagnosticInfo
 }
