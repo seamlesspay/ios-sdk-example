@@ -79,6 +79,7 @@
 		C86656D52DB92B0F00F5AD41 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		C8A551EA2DF0793400DE7B25 /* DiagnosticInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticInfoView.swift; sourceTree = "<group>"; };
 		C8A551F22DF0829800DE7B25 /* Color+TableBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+TableBackground.swift"; sourceTree = "<group>"; };
+		C8AB91612DF9FCE90096AE68 /* ios-sdk-example-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "ios-sdk-example-Info.plist"; sourceTree = "<group>"; };
 		C8FC4B402DC140130048F41D /* CopyButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyButton.swift; sourceTree = "<group>"; };
 		C8FC4B422DC1404E0048F41D /* StatusHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusHeader.swift; sourceTree = "<group>"; };
 		C8FC4B482DC14ACA0048F41D /* ApplePayContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplePayContent.swift; sourceTree = "<group>"; };
@@ -130,6 +131,7 @@
 		6312C9C32BEBB6EB00F99DC6 = {
 			isa = PBXGroup;
 			children = (
+				C8AB91612DF9FCE90096AE68 /* ios-sdk-example-Info.plist */,
 				63604E972D0DA3E700328124 /* ios-sdk-example.entitlements */,
 				6312C9CE2BEBB6EB00F99DC6 /* Example */,
 				6312C9CD2BEBB6EB00F99DC6 /* Products */,
@@ -521,6 +523,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ios-sdk-example-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "SeamlessPay SDK Examples";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -554,6 +557,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "ios-sdk-example-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "SeamlessPay SDK Examples";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
