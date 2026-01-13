@@ -48,8 +48,9 @@
 		C86656D62DB92B0F00F5AD41 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = C86656D52DB92B0F00F5AD41 /* Transaction.swift */; };
 		C8791ED42DE347D900B3A16C /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C8791ED32DE347D900B3A16C /* SeamlessPay */; };
 		C8A551EC2DF0793400DE7B25 /* DiagnosticInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A551EA2DF0793400DE7B25 /* DiagnosticInfoView.swift */; };
-		C8A551EF2DF081DC00DE7B25 /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C8A551EE2DF081DC00DE7B25 /* SeamlessPay */; };
 		C8A551F32DF0829800DE7B25 /* Color+TableBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8A551F22DF0829800DE7B25 /* Color+TableBackground.swift */; };
+		C8A9B3EE2F167DFD00E77CC5 /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C8A9B3ED2F167DFD00E77CC5 /* SeamlessPay */; };
+		C8A9B3F12F1686A400E77CC5 /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C8A9B3F02F1686A400E77CC5 /* SeamlessPay */; };
 		C8B5323A2D9A8F1D00F3004A /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C8B532392D9A8F1D00F3004A /* SeamlessPay */; };
 		C8FAE3742DCB7C0900DC486F /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C8FAE3732DCB7C0900DC486F /* SeamlessPay */; };
 		C8FAE37C2DCBDDC200DC486F /* SeamlessPay in Frameworks */ = {isa = PBXBuildFile; productRef = C8FAE37B2DCBDDC200DC486F /* SeamlessPay */; };
@@ -116,12 +117,13 @@
 				634888262CA19386000900B1 /* SeamlessPay in Frameworks */,
 				63DE0DCD2C7512E700DA1E86 /* SeamlessPay in Frameworks */,
 				C8B5323A2D9A8F1D00F3004A /* SeamlessPay in Frameworks */,
-				C8A551EF2DF081DC00DE7B25 /* SeamlessPay in Frameworks */,
+				C8A9B3EE2F167DFD00E77CC5 /* SeamlessPay in Frameworks */,
 				63991E8B2C4EBF28009C71D8 /* SeamlessPay in Frameworks */,
 				C8FAE3742DCB7C0900DC486F /* SeamlessPay in Frameworks */,
 				634711D92CD1677F003DE102 /* SeamlessPay in Frameworks */,
 				C8FAE37C2DCBDDC200DC486F /* SeamlessPay in Frameworks */,
 				6306BF202C30367000619455 /* SeamlessPay in Frameworks */,
+				C8A9B3F12F1686A400E77CC5 /* SeamlessPay in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -285,7 +287,8 @@
 				C8FAE3732DCB7C0900DC486F /* SeamlessPay */,
 				C8FAE37B2DCBDDC200DC486F /* SeamlessPay */,
 				C8791ED32DE347D900B3A16C /* SeamlessPay */,
-				C8A551EE2DF081DC00DE7B25 /* SeamlessPay */,
+				C8A9B3ED2F167DFD00E77CC5 /* SeamlessPay */,
+				C8A9B3F02F1686A400E77CC5 /* SeamlessPay */,
 			);
 			productName = Demo;
 			productReference = 6312C9CC2BEBB6EB00F99DC6 /* ios-sdk-example.app */;
@@ -316,7 +319,7 @@
 			);
 			mainGroup = 6312C9C32BEBB6EB00F99DC6;
 			packageReferences = (
-				C8A551ED2DF081DC00DE7B25 /* XCRemoteSwiftPackageReference "seamlesspay-ios" */,
+				C8A9B3EF2F1686A400E77CC5 /* XCRemoteSwiftPackageReference "seamlesspay-ios" */,
 			);
 			productRefGroup = 6312C9CD2BEBB6EB00F99DC6 /* Products */;
 			projectDirPath = "";
@@ -602,12 +605,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		C8A551ED2DF081DC00DE7B25 /* XCRemoteSwiftPackageReference "seamlesspay-ios" */ = {
+		C8A9B3EF2F1686A400E77CC5 /* XCRemoteSwiftPackageReference "seamlesspay-ios" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/seamlesspay/seamlesspay-ios";
 			requirement = {
-				kind = exactVersion;
-				version = 2.6.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.7.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -717,9 +720,13 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = SeamlessPay;
 		};
-		C8A551EE2DF081DC00DE7B25 /* SeamlessPay */ = {
+		C8A9B3ED2F167DFD00E77CC5 /* SeamlessPay */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = C8A551ED2DF081DC00DE7B25 /* XCRemoteSwiftPackageReference "seamlesspay-ios" */;
+			productName = SeamlessPay;
+		};
+		C8A9B3F02F1686A400E77CC5 /* SeamlessPay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C8A9B3EF2F1686A400E77CC5 /* XCRemoteSwiftPackageReference "seamlesspay-ios" */;
 			productName = SeamlessPay;
 		};
 		C8B532392D9A8F1D00F3004A /* SeamlessPay */ = {
