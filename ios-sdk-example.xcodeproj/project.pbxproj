@@ -538,7 +538,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.0.0;
+				MARKETING_VERSION = 8.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.seamlesspay.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -572,7 +572,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 7.0.0;
+				MARKETING_VERSION = 8.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.seamlesspay.demo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
