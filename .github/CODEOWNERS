@@ -1,0 +1,11 @@
+# Claiming ownership over all files in the repository
+* @seamlesspay/client
+
+# Deployment protection
+/.circleci/ @seamlesspay/deployers
+/.github/ @seamlesspay/deployers
+/ios-sdk-example.xcodeproj/ @seamlesspay/deployers
+/scripts/ @seamlesspay/deployers
+/Brewfile @seamlesspay/deployers
+/ios-sdk-example.entitlements @seamlesspay/deployers
+/ios-sdk-example-Info.plist @seamlesspay/deployers
